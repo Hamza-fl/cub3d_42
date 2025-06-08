@@ -226,32 +226,32 @@ static void cleanup_game(t_game *g)
 
 int main(int ac, char **argv)
 {
-    t_parsing *p;
+    t_parsing p;
     t_game g;
 
-    if (!ft_parsing(argv[1], p))
+    if (!ft_parsing(argv[1], &p))
     {
         // print_error("Parsing failed.\n");
         return EXIT_FAILURE;
     }
-    
-    init_game_from_parsing(&g, p);
-    
+    printf("im not in parsing\n");
+    init_game_from_parsing(&g, &p);
+    printf("im not in init game\n");
     // Initialize MLX
     if (!init_mlx(&g))
     {
-        free(p);
+        // free(p);
         return 1;
     }
-    
+    printf("im not in init mlx\n");
     // Load textures
-    if (!load_textures(&g, p))
+    if (!load_textures(&g, &p))
     {
         cleanup_game(&g);
-        free(p);
+        // free(p);
         return 1;
     }
-    
+    printf("im not in lod textures\n");
     // Set up event handlers
     mlx_hook(g.win, 2, 1L<<0, key_press, &g);           // Key press
     mlx_hook(g.win, 17, 1L<<17, close_window, &g);      // Window close
@@ -262,6 +262,6 @@ int main(int ac, char **argv)
     
     // Cleanup (this won't be reached in normal execution)
     cleanup_game(&g);
-    free(p);
+    // free(p);
     return 0;
 }
