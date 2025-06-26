@@ -45,8 +45,6 @@ static bool assign_texture(char **dest, const char *path)
         return false;
     }
 
-    printf("DEBUG: checking texture path: '%s'\n", trimmed);
-
     if (!file_has_xpm_extension(trimmed))
     {
         print_error("Error\nTexture missing \".xpm\"\n");
