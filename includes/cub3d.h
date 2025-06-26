@@ -183,4 +183,9 @@ bool    allocate_map_matrix(char **raw_map_lines, int map_line_count, int max_wi
 bool    parse_map_and_allocate(int fd, char *first_map_line, t_parsing *p);
 bool    ft_parsing(const char *filename, t_parsing *parsing);
 
+//init the game
+int	ft_init_game(t_game *game, t_parsing *parsing);
+//game loop
+int	ft_game_loop(t_game *game);
+
 #endif

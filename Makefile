@@ -1,6 +1,7 @@
 NAME = cub3d
 CC = cc 
-FLAGS = -Wall -Werror -Wextra -lmlx -framework OpenGL -framework AppKit
+CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR)
+LDFLAGS = -lmlx -framework OpenGL -framework AppKit
 LIBFT_DIR = libft
 LIBFT_LIB = libft/libft.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
@@ -19,6 +20,7 @@ SRC = parsing/parsing_utils/alloc_matrix.c \
 		parsing/parsing_utils/validate_map.c \
 		parsing/ft_parsing.c \
 		raycaster/init_game.c \
+		raycaster/game_loop.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)
@@ -32,10 +34,10 @@ force_libft:
 	@true
 
 $(NAME): $(OBJ) $(LIBFT_LIB)
-	$(CC) $(FLAGS) -lreadline $(OBJ) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT_LIB) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c $(ALL_HEADERS)
-	$(CC) $(FLAGS) -Iincludes -I$(LIBFT_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ)
