@@ -1,4 +1,4 @@
-#include "includes/parsing.h"
+#include "../includes/cub3d.h"
 
 bool    ft_parsing(const char *filename, t_parsing *parsing)
 {

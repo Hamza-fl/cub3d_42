@@ -1,27 +1,52 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#include "../minilibx-linux/mlx.h"
+#include <mlx.h>
+#include <fcntl.h>
 
-// Key codes (X11)
-#define KEY_ESC    65307
-#define KEY_W      119
-#define KEY_S      115
-#define KEY_A       97
-#define KEY_D      100
-#define KEY_LEFT  65361
-#define KEY_RIGHT 65363
+# define RED    "\x1b[31m"
+# define RESET  "\x1b[0m"
 
+//for the parsing
+typedef struct s_line_node
+{
+    char                *line;
+    struct s_line_node  *next;
+}   t_line_node;
+
+#define KEY_ESC    53
+#define KEY_W      13
+#define KEY_S      1
+#define KEY_A      0
+#define KEY_D      2
+#define KEY_LEFT   123
+#define KEY_RIGHT  124
+
+// Constants for better code readability
+# define SCREEN_WIDTH 1024
+# define SCREEN_HEIGHT 768
+# define TEX_SIZE 64
+# define MOVE_SPEED 0.05
+# define ROT_SPEED 0.03
+
+// Texture indices
+# define NORTH_TEX 0
+# define SOUTH_TEX 1
+# define WEST_TEX 2
+# define EAST_TEX 3
+
+// Vector structure (unchanged as requested)
 typedef struct s_vector {
     double x;
     double y;
 } t_vector;
 
-// Parsing struct
+// Parsing struct (unchanged as requested)
 typedef struct s_parsing {
     char    *no_texture;
     char    *so_texture;
@@ -36,65 +61,126 @@ typedef struct s_parsing {
     char    player_dir;
 } t_parsing;
 
-// Player struct
+// Enhanced texture structure for better management
+typedef struct s_texture {
+    void    *img;           // MLX image pointer
+    char    *data;          // Raw pixel data
+    int     width;          // Texture width
+    int     height;         // Texture height
+    int     bpp;            // Bits per pixel
+    int     line_len;       // Line length in bytes
+    int     endian;         // Endianness
+} t_texture;
+
+// Enhanced player structure with camera plane
 typedef struct s_player {
-    t_vector pos;
-    t_vector dir;
-    t_vector plane;
+    t_vector    pos;        // Player position
+    t_vector    dir;        // Direction vector
+    t_vector    plane;      // Camera plane vector
+    double      move_speed; // Movement speed
+    double      rot_speed;  // Rotation speed
 } t_player;
 
-// Ray struct
+// Enhanced ray structure for DDA algorithm
 typedef struct s_ray {
-    t_vector ray_dir;
-    t_vector side_dist;
-    t_vector delta_dist;
-    int map_x;
-    int map_y;
-    int step_x;
-    int step_y;
-    int hit;
-    int side;
-    double perp_wall_dist;
+    t_vector    dir;            // Ray direction
+    t_vector    side_dist;      // Distance to next x/y side
+    t_vector    delta_dist;     // Length of ray from current pos to x/y side
+    int         map_x;          // Current map position x
+    int         map_y;          // Current map position y
+    int         step_x;         // Step direction in x (-1 or 1)
+    int         step_y;         // Step direction in y (-1 or 1)
+    int         hit;            // Was wall hit?
+    int         side;           // NS or EW wall hit?
+    double      perp_wall_dist; // Perpendicular wall distance
+    int         line_height;    // Height of line to draw
+    int         draw_start;     // Start of line to draw
+    int         draw_end;       // End of line to draw
+    int         tex_num;        // Texture number (0-3)
+    double      wall_x;         // Exact position of wall hit
+    int         tex_x;          // Texture x coordinate
+    double      step;           // How much to increase texture coordinate per screen pixel
+    double      tex_pos;        // Starting texture coordinate
 } t_ray;
 
-// Main game struct
+// Input/Keys structure for better input management
+typedef struct s_keys {
+    int w;          // Move forward
+    int a;          // Move left
+    int s;          // Move backward
+    int d;          // Move right
+    int left;       // Turn left
+    int right;      // Turn right
+    int esc;        // Exit game
+} t_keys;
+
+// Screen buffer structure for efficient rendering
+typedef struct s_image {
+    void    *img;       // MLX image pointer
+    char    *data;      // Raw pixel data
+    int     bpp;        // Bits per pixel
+    int     line_len;   // Line length in bytes
+    int     endian;     // Endianness
+    int     width;      // Image width
+    int     height;     // Image height
+} t_image;
+
+// Main game structure (enhanced and reorganized)
 typedef struct s_game {
+    // MLX related
     void        *mlx;
     void        *win;
+    
+    // Screen properties
     int         screen_width;
     int         screen_height;
-
-    // Raw MLX textures and their pixel data
-    void        *mlx_text_img[4];
-    char        *tex_data[4];
-    int         tex_width[4];
-    int         tex_height[4];
-    int         tex_bpp[4];
-    int         tex_line_len[4];
-    int         tex_endian[4];
-
+    
+    // Textures (using new texture structure)
+    t_texture   textures[4];    // 4 wall textures
+    
+    // Colors
     int         floor_color;
     int         ceiling_color;
-
+    
+    // Map data
     char        **map;
     int         map_width;
     int         map_height;
-
+    
+    // Game objects
     t_player    player;
     t_ray       ray;
-
-    // Off-screen buffer
-    void        *img;
-    char        *img_data;
-    int         bpp;
-    int         stride;
-    int         endian;
+    t_keys      keys;
+    
+    // Screen buffer
+    t_image     screen;
+    
+    // Game state
+    int         running;        // Game running flag
+    double      frame_time;     // Time of current frame
+    double      old_time;       // Time of previous frame
 } t_game;
 
 // Function prototypes
-t_parsing   *parse_cub_file(const char *filename);
-void        init_game_from_parsing(t_game *g, t_parsing *p);
-void        raycast_frame(t_game *g);
+bool    ft_parsing(const char *filename, t_parsing *parsing);
+
+////////////Parsing_utils
+bool    is_texture_line(const char *line);
+bool    line_is_empty(const char *line);
+void    init_parsing(t_parsing *p);
+void    print_error(const char *msg);
+void	ft_free_split(char **split);
+bool	set_texture_path(char *line, t_parsing *p);
+bool    file_has_xpm_extension(const char *path);
+bool    set_ceiling_color(char *line, t_parsing *p);
+bool    set_floor_color(char *line, t_parsing *p);
+bool    ft_str_isnumeric(const char *s);
+bool    split_rgb(const char *s, int rgb[3]);
+bool    parse_header(int fd, t_parsing *parsing, char **first_line);
+bool    collect_map_lines(int fd, char *first_line, char ***out_lines, int *num_lines);
+bool    validate_map(char **map_lines, int height, int width, t_parsing *p);
+bool    allocate_map_matrix(char **raw_map_lines, int map_line_count, int max_width, t_parsing *p);
+bool    parse_map_and_allocate(int fd, char *first_map_line, t_parsing *p);
 bool    ft_parsing(const char *filename, t_parsing *parsing);
 
 #endif
