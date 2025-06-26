@@ -27,4 +27,13 @@ int main(int ac, char **argv)
         print_error("Error :Parsing failed\n");
         return (EXIT_FAILURE);
     }
+    if (!ft_init_game(&g, &p))
+    {
+        print_error("Error :Game initialization failed\n");
+        //need to clean the game
+        return (EXIT_FAILURE);
+    }
+    mlx_loop_hook(g.mlx, ft_game_loop, &g);
+    mlx_loop(g.mlx);
+    return (0);
 }

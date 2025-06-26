@@ -1,6 +1,6 @@
 NAME = cub3d
 CC = cc 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -lmlx -framework OpenGL -framework AppKit
 LIBFT_DIR = libft
 LIBFT_LIB = libft/libft.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
@@ -18,6 +18,7 @@ SRC = parsing/parsing_utils/alloc_matrix.c \
 		parsing/parsing_utils/split_rgb.c \
 		parsing/parsing_utils/validate_map.c \
 		parsing/ft_parsing.c \
+		raycaster/init_game.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)
