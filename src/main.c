@@ -12,28 +12,33 @@
 
 #include "../includes/cub3d.h"
 
-int main(int ac, char **argv)
+int	main(int ac, char **argv)
 {
-    t_parsing p;
-    t_game g;
+	t_parsing	p;
+	t_game		g;
 
-    if (ac != 2)
-    {
-        print_error("Error :Usage: ./cub3D <map.cub>\n");
-        return (EXIT_FAILURE);
-    }
-    if (!ft_parsing(argv[1], &p))
-    {
-        print_error("Error :Parsing failed\n");
-        return (EXIT_FAILURE);
-    }
-    if (!ft_init_game(&g, &p))
-    {
-        print_error("Error :Game initialization failed\n");
-        //need to clean the game
-        return (EXIT_FAILURE);
-    }
-    mlx_loop_hook(g.mlx, ft_game_loop, &g);
-    mlx_loop(g.mlx);
-    return (0);
+	if (ac != 2)
+	{
+		print_error("Error :Usage: ./cub3D <map.cub>\n");
+		return (EXIT_FAILURE);
+	}
+	if (!ft_parsing(argv[1], &p))
+	{
+		print_error("Error :Parsing failed\n");
+		return (EXIT_FAILURE);
+	}
+	if (!ft_init_game(&g, &p))
+	{
+		print_error("Error :Game initialization failed\n");
+		cleanup_game(&g);
+		return (EXIT_FAILURE);
+	}
+	mlx_hook(g.win, 2, 1L<<0, key_press, &g);
+	mlx_hook(g.win, 3, 1L<<1, key_release, &g);
+	mlx_hook(g.win, 17, 1L<<17, close_game, &g);
+	mlx_loop_hook(g.mlx, ft_game_loop, &g);
+	mlx_loop(g.mlx);
+
+	cleanup_game(&g);
+	return (0);
 }

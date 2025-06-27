@@ -7,6 +7,8 @@ LIBFT_LIB = libft/libft.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 HEADER = includes/cub3d.h 
 ALL_HEADERS = $(HEADER) $(LIBFT_HEADER)
+MLX_DIR = minilibx
+MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRC = parsing/parsing_utils/alloc_matrix.c \
 		parsing/parsing_utils/check_xpm.c \
@@ -21,14 +23,20 @@ SRC = parsing/parsing_utils/alloc_matrix.c \
 		parsing/ft_parsing.c \
 		raycaster/init_game.c \
 		raycaster/game_loop.c \
+		raycaster/cleanup_game.c \
+		raycaster/input_handling.c \
+		raycaster/raycaster.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)
 
-all: $(LIBFT_LIB) $(NAME)
+all: $(LIBFT_LIB) $(MLX_LIB) $(NAME)
 
 $(LIBFT_LIB): force_libft
 	make -C $(LIBFT_DIR)
+
+$(MLX_LIB):
+	make -C $(MLX_DIR)
 
 force_libft:
 	@true

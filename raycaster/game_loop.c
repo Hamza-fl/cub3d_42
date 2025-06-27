@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:02:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/26 22:59:32 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/06/27 12:58:19 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	ft_game_loop(t_game *game)
 {
 	if (!game->running)
 		return (0);
+	update_player(game);
 	put_backroad(game);
-	return (1);
+	// cast_rays(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->screen.img, 0, 0);
+	return (0);
 }

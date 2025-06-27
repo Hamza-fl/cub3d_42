@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:02:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/26 21:41:11 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/06/27 10:04:10 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ int	init_textures(t_game *game, t_parsing *parsing)
 			print_error("Error: Could not load texture\n");
 			return (0);
 		}
+		game->textures[i].data = mlx_get_data_addr(game->textures[i].img,
+                                                  &game->textures[i].bpp,
+                                                  &game->textures[i].line_len,
+                                                  &game->textures[i].endian);
 		i++;
 	}
 	return (1);
@@ -101,6 +105,10 @@ int	ft_init_game(t_game *game, t_parsing *parsing)
 									game->screen_height);
 	if (!game->screen.img)
 		return (0);
+	game->screen.data = mlx_get_data_addr(game->screen.img, 
+                                    &game->screen.bpp,
+                                    &game->screen.line_len, 
+                                    &game->screen.endian);
 	game->screen.width = game->screen_width;
 	game->screen.height = game->screen_height;
 	game->map = parsing->map;
