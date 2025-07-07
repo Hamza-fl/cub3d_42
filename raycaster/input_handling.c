@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:14:00 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/07 16:19:10 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/07 16:50:58 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ void	update_player(t_game *game)
 	{
 		new_pos.x = game->player.pos.x + game->player.dir.x * game->player.move_speed;
 		new_pos.y = game->player.pos.y + game->player.dir.y * game->player.move_speed;
-		if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+		if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] != '1')
 		{
 			game->player.pos.x = new_pos.x;
 			game->player.pos.y = new_pos.y;
@@ -82,7 +85,10 @@ void	update_player(t_game *game)
 	{
 		new_pos.x = game->player.pos.x - game->player.dir.x * game->player.move_speed;
 		new_pos.y = game->player.pos.y - game->player.dir.y * game->player.move_speed;
-		if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+		if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] != '1')
 		{
 			game->player.pos.x = new_pos.x;
 			game->player.pos.y = new_pos.y;
@@ -92,7 +98,10 @@ void	update_player(t_game *game)
 	{
 		new_pos.x = game->player.pos.x - game->player.plane.x * game->player.move_speed;
 		new_pos.y = game->player.pos.y - game->player.plane.y * game->player.move_speed;
-		if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+		if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] != '1')
 		{
 			game->player.pos.x = new_pos.x;
 			game->player.pos.y = new_pos.y;
@@ -102,7 +111,10 @@ void	update_player(t_game *game)
 	{
 		new_pos.x = game->player.pos.x + game->player.plane.x * game->player.move_speed;
 		new_pos.y = game->player.pos.y + game->player.plane.y * game->player.move_speed;
-		if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+		if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
+		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] != '1')
 		{
 			game->player.pos.x = new_pos.x;
 			game->player.pos.y = new_pos.y;
