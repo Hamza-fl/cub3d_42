@@ -12,6 +12,25 @@
 
 #include "../includes/cub3d.h"
 
+int	mouse_move(int x, int y, t_game *game)
+{
+	static int	last_x = -1;
+	int			delta_x;
+
+	(void)y;
+
+	if (last_x == -1)
+		last_x = x;
+
+	delta_x = x - last_x;
+	rotate_player(game, delta_x * 0.003);
+
+	last_x = x;
+
+	return (0);
+}
+
+
 int	main(int ac, char **argv)
 {
 	t_parsing	p;
@@ -36,6 +55,7 @@ int	main(int ac, char **argv)
 	mlx_hook(g.win, 2, 1L<<0, key_press, &g);
 	mlx_hook(g.win, 3, 1L<<1, key_release, &g);
 	mlx_hook(g.win, 17, 1L<<17, close_game, &g);
+	mlx_hook(g.win, 6, 1L<<6, mouse_move, &g);
 	mlx_loop_hook(g.mlx, ft_game_loop, &g);
 	mlx_loop(g.mlx);
 
