@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:02:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/27 10:04:10 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/07 09:50:10 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,18 @@ int	init_player(t_game *game, t_parsing *parsing)
 
 int	init_textures(t_game *game, t_parsing *parsing)
 {
-	char *texture_paths[4];
+	char *texture_paths[7];
 	int i;
 	
 	texture_paths[NORTH_TEX] = parsing->no_texture;
 	texture_paths[SOUTH_TEX] = parsing->so_texture;
 	texture_paths[WEST_TEX] = parsing->we_texture;
 	texture_paths[EAST_TEX] = parsing->ea_texture;
+	texture_paths[4] = "textures/weapon_1.xpm";
+	texture_paths[5] = "textures/weapon_2.xpm";
+	texture_paths[6] = "textures/weapon_3.xpm";
 	i = 0;
-	while (i < 4)
+	while (i < 7)
 	{
 		game->textures[i].img = mlx_xpm_file_to_image(game->mlx, 
 														texture_paths[i],
@@ -71,9 +74,9 @@ int	init_textures(t_game *game, t_parsing *parsing)
 			return (0);
 		}
 		game->textures[i].data = mlx_get_data_addr(game->textures[i].img,
-                                                  &game->textures[i].bpp,
-                                                  &game->textures[i].line_len,
-                                                  &game->textures[i].endian);
+												  &game->textures[i].bpp,
+												  &game->textures[i].line_len,
+												  &game->textures[i].endian);
 		i++;
 	}
 	return (1);
@@ -81,6 +84,7 @@ int	init_textures(t_game *game, t_parsing *parsing)
 
 void init_keys(t_keys *keys)
 {
+	keys->shot = 0;
 	keys->w = 0;
 	keys->a = 0;
 	keys->s = 0;
@@ -106,9 +110,9 @@ int	ft_init_game(t_game *game, t_parsing *parsing)
 	if (!game->screen.img)
 		return (0);
 	game->screen.data = mlx_get_data_addr(game->screen.img, 
-                                    &game->screen.bpp,
-                                    &game->screen.line_len, 
-                                    &game->screen.endian);
+									&game->screen.bpp,
+									&game->screen.line_len, 
+									&game->screen.endian);
 	game->screen.width = game->screen_width;
 	game->screen.height = game->screen_height;
 	game->map = parsing->map;

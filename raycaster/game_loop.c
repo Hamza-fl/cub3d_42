@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:02:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/27 12:58:19 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/06 14:37:05 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,29 @@ void put_backroad(t_game *game)
 	}
 }
 
+void put_hands(t_game *game)
+{
+	if (game->keys.shot == 0)
+		mlx_put_image_to_window(game->mlx, game->win, game->textures[4].img, 20, 0);
+	static int frame = 0;
+	if (game->keys.shot == 1)
+	{
+		frame++;
+		if (frame % 2 == 0)
+			mlx_put_image_to_window(game->mlx, game->win, game->textures[5].img, 150, 415);
+		else
+			mlx_put_image_to_window(game->mlx, game->win, game->textures[6].img, 150, 415);
+	}
+}
+
 int	ft_game_loop(t_game *game)
 {
 	if (!game->running)
 		return (0);
 	update_player(game);
 	put_backroad(game);
-	// cast_rays(game);
+	cast_rays(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->screen.img, 0, 0);
+	put_hands(game);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#include <mlx.h>
+#include "../minilibx/mlx.h"
 #include <fcntl.h>
 
 # define RED    "\x1b[31m"
@@ -102,6 +102,7 @@ typedef struct s_ray {
 } t_ray;
 
 typedef struct s_keys {
+	int shot;
 	int w;
 	int a;
 	int s;
@@ -127,7 +128,7 @@ typedef struct s_game {
 	void		*win;
 	int			screen_width;
 	int			screen_height;
-	t_texture	textures[4];
+	t_texture	textures[7];
 	int			floor_color;
 	int			ceiling_color;
 	char		**map;
@@ -180,4 +181,14 @@ void	update_player(t_game *game);
 void	cast_rays(t_game *game);
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
 
+// inti pos
+void	init_ray_dir(t_game *game, int x);
+void	init_delta_dist(t_game *game);
+void	init_first_step(t_game *game);
+
+//dda
+void	perform_dda(t_game *game);
+
+void	calc_player_to_wall(t_game *game);
+void	calc_wall_line(t_game *game, int *start, int *end, int *line);
 #endif

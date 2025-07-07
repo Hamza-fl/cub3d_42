@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:14:00 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/27 12:59:30 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/07 16:19:10 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	key_press(int keycode, t_game *game)
 {
-	if (keycode == KEY_W)
+	if (keycode == 14)
+		game->keys.shot = 1;
+	else if (keycode == KEY_W)
 		game->keys.w = 1;
 	else if (keycode == KEY_A)
 		game->keys.a = 1;
@@ -33,7 +35,9 @@ int	key_press(int keycode, t_game *game)
 
 int	key_release(int keycode, t_game *game)
 {
-	if (keycode == KEY_W)
+	if (keycode == 14)
+		game->keys.shot = 0;
+	else if (keycode == KEY_W)
 		game->keys.w = 0;
 	else if (keycode == KEY_A)
 		game->keys.a = 0;
@@ -50,14 +54,14 @@ int	key_release(int keycode, t_game *game)
 
 void rotate_player(t_game *game, double angle)
 {
-    double old_dir_x = game->player.dir.x;
-    double old_plane_x = game->player.plane.x;
-    
-    game->player.dir.x = game->player.dir.x * cos(angle) - game->player.dir.y * sin(angle);
-    game->player.dir.y = old_dir_x * sin(angle) + game->player.dir.y * cos(angle);
-    
-    game->player.plane.x = game->player.plane.x * cos(angle) - game->player.plane.y * sin(angle);
-    game->player.plane.y = old_plane_x * sin(angle) + game->player.plane.y * cos(angle);
+	double old_dir_x = game->player.dir.x;
+	double old_plane_x = game->player.plane.x;
+	
+	game->player.dir.x = game->player.dir.x * cos(angle) - game->player.dir.y * sin(angle);
+	game->player.dir.y = old_dir_x * sin(angle) + game->player.dir.y * cos(angle);
+	
+	game->player.plane.x = game->player.plane.x * cos(angle) - game->player.plane.y * sin(angle);
+	game->player.plane.y = old_plane_x * sin(angle) + game->player.plane.y * cos(angle);
 }
 
 void	update_player(t_game *game)
@@ -74,6 +78,38 @@ void	update_player(t_game *game)
 			game->player.pos.y = new_pos.y;
 		}
 	}
+	if (game->keys.s)
+	{
+		new_pos.x = game->player.pos.x - game->player.dir.x * game->player.move_speed;
+		new_pos.y = game->player.pos.y - game->player.dir.y * game->player.move_speed;
+		if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+		{
+			game->player.pos.x = new_pos.x;
+			game->player.pos.y = new_pos.y;
+		}
+	}
+	if (game->keys.a)
+	{
+		new_pos.x = game->player.pos.x - game->player.plane.x * game->player.move_speed;
+		new_pos.y = game->player.pos.y - game->player.plane.y * game->player.move_speed;
+		if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+		{
+			game->player.pos.x = new_pos.x;
+			game->player.pos.y = new_pos.y;
+		}
+	}
+	if (game->keys.d)
+	{
+		new_pos.x = game->player.pos.x + game->player.plane.x * game->player.move_speed;
+		new_pos.y = game->player.pos.y + game->player.plane.y * game->player.move_speed;
+		if (game->map[(int)new_pos.y][(int)new_pos.x] != '1')
+		{
+			game->player.pos.x = new_pos.x;
+			game->player.pos.y = new_pos.y;
+		}
+	}
 	if (game->keys.right)
 		rotate_player(game, game->player.rot_speed);
+	if (game->keys.left)
+		rotate_player(game, -game->player.rot_speed);
 }

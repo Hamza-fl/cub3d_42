@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR)
 LDFLAGS = -lmlx -framework OpenGL -framework AppKit
 LIBFT_DIR = libft
 LIBFT_LIB = libft/libft.a
+LIBFT_MLX = minilibx/libmlx.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 HEADER = includes/cub3d.h 
 ALL_HEADERS = $(HEADER) $(LIBFT_HEADER)
@@ -26,6 +27,9 @@ SRC = parsing/parsing_utils/alloc_matrix.c \
 		raycaster/cleanup_game.c \
 		raycaster/input_handling.c \
 		raycaster/raycaster.c \
+		raycaster/init_pos.c \
+		raycaster/dda.c \
+		raycaster/calc_wall.c \
 		src/main.c
 
 OBJ = $(SRC:.c=.o)
@@ -42,7 +46,7 @@ force_libft:
 	@true
 
 $(NAME): $(OBJ) $(LIBFT_LIB)
-	$(CC) $(OBJ) $(LIBFT_LIB) $(LDFLAGS) -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT_LIB) $(LIBFT_MLX) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c $(ALL_HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
