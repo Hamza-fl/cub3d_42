@@ -30,7 +30,8 @@ SRC = parsing/parsing_utils/alloc_matrix.c \
 		raycaster/init_pos.c \
 		raycaster/dda.c \
 		raycaster/calc_wall.c \
-		src/main.c
+		src/main.c \
+		raycaster/mini_map.c
 
 OBJ = $(SRC:.c=.o)
 

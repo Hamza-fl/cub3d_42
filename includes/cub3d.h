@@ -191,4 +191,7 @@ void	perform_dda(t_game *game);
 
 void	calc_player_to_wall(t_game *game);
 void	calc_wall_line(t_game *game, int *start, int *end, int *line);
+//rotate
+void rotate_player(t_game *game, double angle);
+void draw_minimap(t_game *game);
 #endif
