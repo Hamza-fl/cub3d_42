@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:02:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/08 10:18:35 by asebban          ###   ########.fr       */
+/*   Updated: 2025/07/10 09:10:02 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,18 @@ void put_backroad(t_game *game)
 
 void put_hands(t_game *game)
 {
-	if (game->keys.shot == 0)
-		mlx_put_image_to_window(game->mlx, game->win, game->textures[4].img, 20, 0);
-	static int frame = 0;
-	if (game->keys.shot == 1)
-	{
-		frame++;
-		if (frame % 2 == 0)
-			mlx_put_image_to_window(game->mlx, game->win, game->textures[5].img, 150, 415);
-		else
-			mlx_put_image_to_window(game->mlx, game->win, game->textures[6].img, 150, 415);
-	}
+   static int frame = 0;
+   static int count = 0;
+   int index;
+
+   count++;
+   if (count >= 20)
+   {
+       frame++;
+       count = 0;
+   }
+   index = 4 + (frame % 3);
+   mlx_put_image_to_window(game->mlx, game->win, game->textures[index].img, 50, 20);
 }
 
 int	ft_game_loop(t_game *game)

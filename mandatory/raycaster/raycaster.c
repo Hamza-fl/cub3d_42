@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:16 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/07 16:04:50 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/08 17:35:23 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	cast_rays(t_game *game)
 	int	x;
 
 	x = 0;
-	while (x < game->screen_width + 1)
+	while (x < game->screen_width)
 	{
 		cast_single_ray(game, x);
 		x++;

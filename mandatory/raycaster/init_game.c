@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:02:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/07 09:50:10 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 09:00:29 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	init_textures(t_game *game, t_parsing *parsing)
 	texture_paths[SOUTH_TEX] = parsing->so_texture;
 	texture_paths[WEST_TEX] = parsing->we_texture;
 	texture_paths[EAST_TEX] = parsing->ea_texture;
-	texture_paths[4] = "textures/weapon_1.xpm";
-	texture_paths[5] = "textures/weapon_2.xpm";
-	texture_paths[6] = "textures/weapon_3.xpm";
+	texture_paths[4] = "mandatory/textures/weapon_1.xpm";
+	texture_paths[5] = "mandatory/textures/weapon_2.xpm";
+	texture_paths[6] = "mandatory/textures/weapon_3.xpm";
 	i = 0;
 	while (i < 7)
 	{

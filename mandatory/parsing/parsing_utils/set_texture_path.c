@@ -51,7 +51,6 @@ static bool assign_texture(char **dest, const char *path)
         free(trimmed);
         return false;
     }
-
     int fd = open(trimmed, O_RDONLY);
     if (fd < 0)
     {

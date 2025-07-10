@@ -2,36 +2,34 @@ NAME = cub3d
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR)
 LDFLAGS = -lmlx -framework OpenGL -framework AppKit
-LIBFT_DIR = libft
-LIBFT_LIB = libft/libft.a
-LIBFT_MLX = minilibx/libmlx.a
+LIBFT_DIR = mandatory/libft
+LIBFT_LIB = mandatory/libft/libft.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
 HEADER = includes/cub3d.h 
 ALL_HEADERS = $(HEADER) $(LIBFT_HEADER)
-MLX_DIR = minilibx
-MLX_LIB = $(MLX_DIR)/libmlx.a
+MLX_DIR = mandatory/minilibx
 
-SRC = parsing/parsing_utils/alloc_matrix.c \
-		parsing/parsing_utils/check_xpm.c \
-		parsing/parsing_utils/collect_map_lines.c \
-		parsing/parsing_utils/ft_print_error.c \
-		parsing/parsing_utils/parse_header.c \
-		parsing/parsing_utils/parse_map.c \
-		parsing/parsing_utils/set_colors.c \
-		parsing/parsing_utils/set_texture_path.c \
-		parsing/parsing_utils/split_rgb.c \
-		parsing/parsing_utils/validate_map.c \
-		parsing/ft_parsing.c \
-		raycaster/init_game.c \
-		raycaster/game_loop.c \
-		raycaster/cleanup_game.c \
-		raycaster/input_handling.c \
-		raycaster/raycaster.c \
-		raycaster/init_pos.c \
-		raycaster/dda.c \
-		raycaster/calc_wall.c \
-		src/main.c \
-		raycaster/mini_map.c
+SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
+		mandatory/parsing/parsing_utils/check_xpm.c \
+		mandatory/parsing/parsing_utils/collect_map_lines.c \
+		mandatory/parsing/parsing_utils/ft_print_error.c \
+		mandatory/parsing/parsing_utils/parse_header.c \
+		mandatory/parsing/parsing_utils/parse_map.c \
+		mandatory/parsing/parsing_utils/set_colors.c \
+		mandatory/parsing/parsing_utils/set_texture_path.c \
+		mandatory/parsing/parsing_utils/split_rgb.c \
+		mandatory/parsing/parsing_utils/validate_map.c \
+		mandatory/parsing/ft_parsing.c \
+		mandatory/raycaster/init_game.c \
+		mandatory/raycaster/game_loop.c \
+		mandatory/raycaster/cleanup_game.c \
+		mandatory/raycaster/input_handling.c \
+		mandatory/raycaster/raycaster.c \
+		mandatory/raycaster/init_pos.c \
+		mandatory/raycaster/dda.c \
+		mandatory/raycaster/calc_wall.c \
+		mandatory/src/main.c \
+		mandatory/raycaster/mini_map.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -39,9 +37,6 @@ all: $(LIBFT_LIB) $(MLX_LIB) $(NAME)
 
 $(LIBFT_LIB): force_libft
 	make -C $(LIBFT_DIR)
-
-$(MLX_LIB):
-	make -C $(MLX_DIR)
 
 force_libft:
 	@true

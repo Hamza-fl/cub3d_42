@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#include "../minilibx/mlx.h"
+#include <mlx.h>
 #include <fcntl.h>
 
 # define RED    "\x1b[31m"
@@ -114,7 +114,7 @@ typedef struct s_keys {
 
 // Screen buffer structure for efficient rendering
 typedef struct s_image {
-	void    *img;       // MLX image pointer
+	void    *img;       // MLX image pointerw
 	char    *data;      // Raw pixel data
 	int     bpp;        // Bits per pixel
 	int     line_len;   // Line length in bytes
