@@ -6,7 +6,7 @@
 /*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:04:45 by asebban           #+#    #+#             */
-/*   Updated: 2025/07/08 17:39:34 by asebban          ###   ########.fr       */
+/*   Updated: 2025/07/10 10:50:56 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,19 @@ void draw_minimap(t_game *game)
             int map_y = window_start_y + y;
 
             if (map_x >= 0 && map_x < game->map_width &&
-                map_y >= 0 && map_y < game->map_height &&
-                game->map[map_y][map_x] == '1')
+                map_y >= 0 && map_y < game->map_height)
             {
                 int sx = MINI_MAP_OFFSET_X + x * MINI_TILE_SIZE;
                 int sy = MINI_MAP_OFFSET_Y + y * MINI_TILE_SIZE;
 
-                draw_square(&game->screen, sx, sy, MINI_TILE_SIZE, 0xFFFFFF);
+                if (game->map[map_y][map_x] == '1')
+                {
+                    draw_square(&game->screen, sx, sy, MINI_TILE_SIZE, 0xFFFFFF);
+                }
+                else if (game->map[map_y][map_x] == 'D')
+                {
+                    draw_square(&game->screen, sx, sy, MINI_TILE_SIZE, 0x00FF00);
+                }
             }
             x++;
         }
