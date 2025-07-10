@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:02:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/10 09:10:02 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 14:53:35 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void my_mlx_pixel_put(t_image *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void put_backroad(t_game *game)
+void put_background(t_game *game)
 {
 	int	x;
 	int	y;
@@ -74,7 +74,7 @@ int	ft_game_loop(t_game *game)
 	if (!game->running)
 		return (0);
 	update_player(game);
-	put_backroad(game);
+	put_background(game);
 	cast_rays(game);
 	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->screen.img, 0, 0);
