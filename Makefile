@@ -1,17 +1,26 @@
 NAME = cub3d
-NAME_bonus = cub3d_bonus
+BONUS_NAME = cub3d_bonus
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR)
+BONUS_CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(BONUS_LIBFT_DIR)
 LDFLAGS = -lmlx -framework OpenGL -framework AppKit
+
+# Mandatory libft
 LIBFT_DIR = mandatory/libft
-LIBFT_BONUS_DIR = bonus/libft
 LIBFT_LIB = mandatory/libft/libft.a
-LIBFT_LIB_bonus = bonus/libft/libft.a
 LIBFT_HEADER = $(LIBFT_DIR)/libft.h
+
+# Bonus libft
+BONUS_LIBFT_DIR = bonus/libft
+BONUS_LIBFT_LIB = bonus/libft/libft.a
+BONUS_LIBFT_HEADER = $(BONUS_LIBFT_DIR)/libft.h
+
 HEADER = includes/cub3d.h 
 ALL_HEADERS = $(HEADER) $(LIBFT_HEADER)
+BONUS_ALL_HEADERS = $(HEADER) $(BONUS_LIBFT_HEADER)
 MLX_DIR = mandatory/minilibx
 
+# Mandatory source files
 SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
 		mandatory/parsing/parsing_utils/check_xpm.c \
 		mandatory/parsing/parsing_utils/collect_map_lines.c \
@@ -34,7 +43,8 @@ SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
 		mandatory/src/main.c \
 		mandatory/raycaster/mini_map.c
 
-SRC_BONUS = bonus/parsing/parsing_utils/alloc_matrix.c \
+# Bonus source files
+BONUS_SRC = bonus/parsing/parsing_utils/alloc_matrix.c \
 		bonus/parsing/parsing_utils/check_xpm.c \
 		bonus/parsing/parsing_utils/collect_map_lines.c \
 		bonus/parsing/parsing_utils/ft_print_error.c \
@@ -57,41 +67,53 @@ SRC_BONUS = bonus/parsing/parsing_utils/alloc_matrix.c \
 		bonus/raycaster/mini_map.c
 
 OBJ = $(SRC:.c=.o)
-bonus_OBJ = $(SRC_BONUS:.c=.o)
+BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
-all: $(LIBFT_LIB) $(NAME)
+# Default target builds mandatory
+all: $(LIBFT_LIB) $(MLX_LIB) $(NAME)
 
+# Bonus target
+bonus: $(BONUS_LIBFT_LIB) $(MLX_LIB) $(BONUS_NAME)
+
+# Build mandatory libft
 $(LIBFT_LIB): force_libft
 	make -C $(LIBFT_DIR)
 
-$(LIBFT_LIB_bonus): force_libft
-	make -C $(LIBFT_BONUS_DIR)
+# Build bonus libft
+$(BONUS_LIBFT_LIB): force_libft
+	make -C $(BONUS_LIBFT_DIR)
 
 force_libft:
 	@true
 
-$(NAME_bonus): $(bonus_OBJ) $(LIBFT_LIB_bonus)
-	$(CC) $(bonus_OBJ) $(LIBFT_LIB_bonus) $(LDFLAGS) -o $(NAME_bonus)
-
+# Build mandatory executable
 $(NAME): $(OBJ) $(LIBFT_LIB)
 	$(CC) $(OBJ) $(LIBFT_LIB) $(LDFLAGS) -o $(NAME)
 
-bonus: $(LIBFT_LIB_bonus) $(NAME_bonus)
+# Build bonus executable
+$(BONUS_NAME): $(BONUS_OBJ) $(BONUS_LIBFT_LIB)
+	$(CC) $(BONUS_OBJ) $(BONUS_LIBFT_LIB) $(LDFLAGS) -o $(BONUS_NAME)
 
-%.o: %.c $(ALL_HEADERS)
+# Compile mandatory object files
+mandatory/%.o: mandatory/%.c $(ALL_HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-	rm -rf $(OBJ) $(bonus_OBJ)
-	@make clean -C $(LIBFT_DIR)
-	@make clean -C $(LIBFT_BONUS_DIR)
+# Compile bonus object files
+bonus/%.o: bonus/%.c $(BONUS_ALL_HEADERS)
+	$(CC) $(BONUS_CFLAGS) -c $< -o $@
 
-fclean: clean 
-	rm -rf $(NAME)
-	rm -rf $(NAME_bonus)
+clean:
+	rm -rf $(OBJ) $(BONUS_OBJ)
+	@make clean -C $(LIBFT_DIR)
+	@make clean -C $(BONUS_LIBFT_DIR)
+
+fclean: clean
+	rm -rf $(NAME) $(BONUS_NAME)
 	@make fclean -C $(LIBFT_DIR)
-	@make fclean -C $(LIBFT_BONUS_DIR)
+	@make fclean -C $(BONUS_LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re force_libft
+re_bonus: fclean bonus
+
+.PHONY: clean force_libft

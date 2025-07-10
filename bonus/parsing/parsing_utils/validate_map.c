@@ -17,7 +17,7 @@ bool trim_map_lines(char **map_lines, int height)
     char *trimmed_line;
     for (int i = 0; i < height; i++)
     {
-        trimmed_line = ft_strtrim(map_lines[i], "\n\r\f\v");
+        trimmed_line = ft_strtrim(map_lines[i], "\n");
         if (!trimmed_line)
             return false; // ft_malloc failure in ft_strtrim
         free(map_lines[i]);
