@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 06:18:15 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/07 10:02:22 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 11:08:06 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int	is_wall(t_game *game, int x, int y)
 	if (x < 0 || x >= game->map_width || y < 0 || y >= game->map_height)
 		return (1);
 	return (game->map[y][x] == '1');
+}
+
+int	is_door(t_game *game, int x, int y)
+{
+	if (x < 0 || x >= game->map_width || y < 0 || y >= game->map_height)
+		return (1);
+	return (game->map[y][x] == 'D');
 }
 
 void	dda_step(t_game *game, int *side)
@@ -46,6 +53,8 @@ void	perform_dda(t_game *game)
 		dda_step(game, &side);
 		if (is_wall(game, game->ray.map_x, game->ray.map_y))
 			flag = 1;
+		if (is_door(game, game->ray.map_x, game->ray.map_y))
+			flag = 2;
 	}
 	game->ray.hit = flag;
 	game->ray.side = side;

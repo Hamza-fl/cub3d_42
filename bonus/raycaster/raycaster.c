@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:16 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/08 17:35:23 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 11:11:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int	select_texture(t_game *game)
 {
+	if (game->ray.hit == 2)
+		return (7);
 	if (game->ray.side == 0)
 	{
 		if (game->ray.dir.x > 0)

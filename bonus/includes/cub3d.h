@@ -128,7 +128,7 @@ typedef struct s_game {
 	void		*win;
 	int			screen_width;
 	int			screen_height;
-	t_texture	textures[7];
+	t_texture	textures[8];
 	int			floor_color;
 	int			ceiling_color;
 	char		**map;

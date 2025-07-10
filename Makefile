@@ -70,8 +70,8 @@ $(LIBFT_LIB_bonus): force_libft
 force_libft:
 	@true
 
-$(NAME_bonus): $(bonus_OBJ) $(LIBFT_LIB)
-	$(CC) $(bonus_OBJ) $(LIBFT_LIB) $(LDFLAGS) -o $(NAME_bonus)
+$(NAME_bonus): $(bonus_OBJ) $(LIBFT_LIB_bonus)
+	$(CC) $(bonus_OBJ) $(LIBFT_LIB_bonus) $(LDFLAGS) -o $(NAME_bonus)
 
 $(NAME): $(OBJ) $(LIBFT_LIB)
 	$(CC) $(OBJ) $(LIBFT_LIB) $(LDFLAGS) -o $(NAME)

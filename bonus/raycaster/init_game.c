@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:02:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/10 10:37:13 by asebban          ###   ########.fr       */
+/*   Updated: 2025/07/10 11:03:23 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	init_player(t_game *game, t_parsing *parsing)
 
 int	init_textures(t_game *game, t_parsing *parsing)
 {
-	char *texture_paths[7];
+	char *texture_paths[8];
 	int i;
 	
 	texture_paths[NORTH_TEX] = parsing->no_texture;
@@ -61,8 +61,9 @@ int	init_textures(t_game *game, t_parsing *parsing)
 	texture_paths[4] = "bonus/textures/weapon_1.xpm";
 	texture_paths[5] = "bonus/textures/weapon_2.xpm";
 	texture_paths[6] = "bonus/textures/weapon_3.xpm";
+	texture_paths[7] = "bonus/textures/door.xpm";
 	i = 0;
-	while (i < 7)
+	while (i < 8)
 	{
 		game->textures[i].img = mlx_xpm_file_to_image(game->mlx, 
 														texture_paths[i],
