@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:14:00 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/10 18:22:37 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/12 21:17:21 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	key_press(int keycode, t_game *game)
 	{
 		if (game->door_status == 0)
 			game->door_status = 1;
-		else
+		else if (game->door_status == 1 && game->map[(int)game->player.pos.y][(int)game->player.pos.x] != 'D')
 			game->door_status = 0;
 	}
 	return (0);
