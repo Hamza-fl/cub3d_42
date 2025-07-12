@@ -172,19 +172,76 @@ static bool check_interior_leaks(char **map_lines, int height, int width)
     return true;
 }
 
+// bool validate_map(char **map_lines, int height, int width, t_parsing *p)
+// {
+//     if (!trim_map_lines(map_lines, height))
+//         return false; //check in each case
+//     if (!check_basic_args(map_lines, height, width, p))
+//         return false;
+//     if (!find_max_width_and_check_lengths(map_lines, height, width))
+//         return false;
+//     if (!scan_and_locate_player(map_lines, height, width, p))
+//         return false;
+//     if (!check_interior_leaks(map_lines, height, width))//check
+//         return false;
+//     p->map_width  = width;
+//     p->map_height = height;//check
+//     return (true);
+// }
+
+bool check_doors_between_walls(char **map_lines, int height, int width)
+{
+    int y = 0;
+    while (y < height)
+    {
+        int x = 0;
+        while (x < width)
+        {
+            if (map_lines[y][x] == 'D')
+            {
+                bool horizontal_ok = false;
+                bool vertical_ok = false;
+
+                if (x > 0 && x < width - 1)
+                {
+                    if (map_lines[y][x - 1] == '1' && map_lines[y][x + 1] == '1')
+                        horizontal_ok = true;
+                }
+                if (y > 0 && y < height - 1)
+                {
+                    if (map_lines[y - 1][x] == '1' && map_lines[y + 1][x] == '1')
+                        vertical_ok = true;
+                }
+
+                if (!horizontal_ok && !vertical_ok)
+                {
+                    print_error("Error: Door is not between two walls!\n");
+                    return false;
+                }
+            }
+            x++;
+        }
+        y++;
+    }
+    return true;
+}
+
+
 bool validate_map(char **map_lines, int height, int width, t_parsing *p)
 {
     if (!trim_map_lines(map_lines, height))
-        return false; //check in each case
+        return false;
     if (!check_basic_args(map_lines, height, width, p))
         return false;
     if (!find_max_width_and_check_lengths(map_lines, height, width))
         return false;
     if (!scan_and_locate_player(map_lines, height, width, p))
         return false;
-    if (!check_interior_leaks(map_lines, height, width))//check
+    if (!check_interior_leaks(map_lines, height, width))
+        return false;
+    if (!check_doors_between_walls(map_lines, height, width))
         return false;
     p->map_width  = width;
-    p->map_height = height;//check
-    return (true);
+    p->map_height = height;
+    return true;
 }
