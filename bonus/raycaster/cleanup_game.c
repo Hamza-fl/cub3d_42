@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:00:00 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/27 11:05:13 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 14:56:40 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	cleanup_game(t_game *game)
 	int	i;
 	
 	i = 0;
-	while (i < 4)
+	while (i < 8)
 	{
 		if (game->textures[i].img)
 			mlx_destroy_image(game->mlx, game->textures[i].img);

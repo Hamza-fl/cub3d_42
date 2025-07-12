@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:02:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/10 11:03:23 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 17:56:51 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void init_keys(t_keys *keys)
 	keys->left = 0;
 	keys->right = 0;
 	keys->esc = 0;
+	keys->f = 0;
 }
 
 int	ft_init_game(t_game *game, t_parsing *parsing)
@@ -129,5 +130,6 @@ int	ft_init_game(t_game *game, t_parsing *parsing)
 	game->running = 1;
 	game->frame_time = 0;
 	game->old_time = 0;
+	game->door_status = 0;
 	return (1);
 }

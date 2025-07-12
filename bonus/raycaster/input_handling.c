@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:14:00 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/09 15:29:43 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 18:22:37 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	key_press(int keycode, t_game *game)
 		game->keys.right = 1;
 	else if (keycode == KEY_ESC)
 		close_game(game);
+	else if ( keycode == KEY_F)
+	{
+		if (game->door_status == 0)
+			game->door_status = 1;
+		else
+			game->door_status = 0;
+	}
 	return (0);
 }
 
@@ -72,14 +79,25 @@ void	update_player(t_game *game)
 	{
 		new_pos.x = game->player.pos.x + game->player.dir.x * game->player.move_speed;
 		new_pos.y = game->player.pos.y + game->player.dir.y * game->player.move_speed;
-		if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
-		game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] != '1' &&
-		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] != '1' &&
-		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] != '1')
+		if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] == '1' ||
+			game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] == '1' ||
+			game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] == '1' ||
+			game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] == '1')
 		{
-			game->player.pos.x = new_pos.x;
-			game->player.pos.y = new_pos.y;
+			return ;
 		}
+		if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] == 'D' ||
+			game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] == 'D' ||
+			game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] == 'D' ||
+			game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] == 'D')
+		{
+			if (game->door_status == 0)
+			{
+				return ;
+			}
+		}
+		game->player.pos.x = new_pos.x;
+		game->player.pos.y = new_pos.y;
 	}
 	if (game->keys.s)
 	{

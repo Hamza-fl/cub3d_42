@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:27:16 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/10 11:11:57 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/10 17:44:44 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	select_texture(t_game *game)
 	return (SOUTH_TEX);
 }
 
-int	calc_tex_x(t_game *game)
+int calc_tex_x(t_game *game)
 {
-	double hit_pos;
+    double hit_pos;
     int texture_x;
 
     if (game->ray.side == 0)
@@ -39,7 +39,7 @@ int	calc_tex_x(t_game *game)
         hit_pos = game->player.pos.x + game->ray.perp_wall_dist * game->ray.dir.x;
     hit_pos = hit_pos - (int)hit_pos;
     texture_x = (int)(hit_pos * TEX_SIZE);
-	return texture_x;
+    return texture_x;
 }
 
 int	get_texture_pixel(t_texture *texture, int x, int y)

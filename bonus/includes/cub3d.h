@@ -26,6 +26,7 @@ typedef struct s_line_node
 #define KEY_D      2
 #define KEY_LEFT   123
 #define KEY_RIGHT  124
+#define KEY_F 3
 
 // Constants for better code readability
 # define SCREEN_WIDTH 1024
@@ -110,6 +111,7 @@ typedef struct s_keys {
 	int left;
 	int right;
 	int esc;
+	int f;
 } t_keys;
 
 // Screen buffer structure for efficient rendering
@@ -134,6 +136,7 @@ typedef struct s_game {
 	char		**map;
 	int			map_width;
 	int			map_height;
+	int			door_status;
 	t_player	player;
 	t_ray		ray;
 	t_keys		keys;
