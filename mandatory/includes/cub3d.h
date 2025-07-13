@@ -150,7 +150,7 @@ bool	ft_parsing(const char *filename, t_parsing *parsing);
 ////////////Parsing_utils
 bool	is_texture_line(const char *line);
 bool	line_is_empty(const char *line);
-void	init_parsing(t_parsing *p);
+void	ft_initialisation(t_parsing *p);
 void	print_error(const char *msg);
 void	ft_free_split(char **split);
 bool	set_texture_path(char *line, t_parsing *p);
@@ -165,6 +165,11 @@ bool	validate_map(char **map_lines, int height, int width, t_parsing *p);
 bool	allocate_map_matrix(char **raw_map_lines, int map_line_count, int max_width, t_parsing *p);
 bool	parse_map_and_allocate(int fd, char *first_map_line, t_parsing *p);
 bool	ft_parsing(const char *filename, t_parsing *parsing);
+bool check_interior_leaks(char **map_lines, int height, int width);
+bool  scan_and_locate_player(char **map_lines,
+									 int height,
+									 int width,
+									 t_parsing *p);
 
 //init the game
 int	ft_init_game(t_game *game, t_parsing *parsing);

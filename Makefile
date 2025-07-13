@@ -41,7 +41,8 @@ SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
 		mandatory/raycaster/dda.c \
 		mandatory/raycaster/calc_wall.c \
 		mandatory/src/main.c \
-		mandatory/raycaster/mini_map.c
+		mandatory/raycaster/mini_map.c \
+		mandatory/parsing/parsing_utils/map_utils.c
 
 # Bonus source files
 BONUS_SRC = bonus/parsing/parsing_utils/alloc_matrix.c \

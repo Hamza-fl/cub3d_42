@@ -74,6 +74,7 @@ static bool  scan_and_locate_player(char **map_lines,
             if (ch != '0' && ch != '1' && ch != ' ' &&
                 ch != 'N' && ch != 'S' && ch != 'E' && ch != 'W' && ch != 'D')
             {
+                printf("%d\n", ch);
                 print_error("Error\nInvalid character\n");
                 return false;
             }

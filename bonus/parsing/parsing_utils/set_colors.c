@@ -14,8 +14,8 @@
 
 bool set_floor_color(char *line, t_parsing *p)
 {
-    char *ptr;
-    int   rgb[3];
+    char    *ptr;
+    int     rgb[3];// set to NULL 
 
     if (!line || !p)
         return (false);
@@ -26,7 +26,7 @@ bool set_floor_color(char *line, t_parsing *p)
         return (false);
     }
     ptr = line + 1;
-    while (*ptr == ' ' || *ptr == '\t')
+    while (*ptr == ' ')
         ptr++;
     if (!split_rgb(ptr, rgb))
         return (false);
@@ -49,12 +49,10 @@ bool set_ceiling_color(char *line, t_parsing *p)
     }
 
     ptr = line + 1;
-    while (*ptr == ' ' || *ptr == '\t')
+    while (*ptr == ' ')
         ptr++;
-
     if (!split_rgb(ptr, rgb))
         return (false);
-
     p->ceiling_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
     return (true);
 }

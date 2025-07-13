@@ -29,74 +29,66 @@ void	ft_free_split(char **split)
 
 static bool assign_texture(char **dest, const char *path)
 {
-    char *trimmed;
-
+    char    *trimmed;
     if (*dest != NULL)
     {
         print_error("Error\nDuplicate texture path\n");
-        return false;
+        return (false);
     }
-
-    // Trim newline, carriage return, and whitespace
-    trimmed = ft_strtrim(path, " \t\r\n");
+    trimmed = ft_strtrim(path, " \n");
     if (!trimmed)
     {
         print_error("Error\nft_strtrim failed\n");
-        return false;
+        return (false);
     }
-
     if (!file_has_xpm_extension(trimmed))
     {
         print_error("Error\nTexture missing \".xpm\"\n");
         free(trimmed);
-        return false;
+        return (false);
     }
     int fd = open(trimmed, O_RDONLY);
     if (fd < 0)
     {
-        print_error("Error\nCannot open texture file\n");
-        // free(trimmed);//double free
-        return false;
+        print_error("Error\nCannot open texture file\n");//double free
+        return (false);
     }
-
     close(fd);
     *dest = ft_strdup(trimmed);
     free(trimmed);
-
     if (!*dest)
     {
         print_error("Error\nft_strdup failed");
-        return false;
+        return (false);
     }
-
-    return true;
+    return (true);
 }
 
 bool	set_texture_path(char *line, t_parsing *p)
 {
     char    **tokens;
-    bool    ok;
+    bool    var;
 
-    ok = false;
+    var = false;
     if (!line || !p)
         return false;
-    tokens = ft_split(line, ' ');// i dont know if i should add tabulation horizontal
+    tokens = ft_split(line, ' ');
     if (!tokens || !tokens[0] || !tokens[1] || tokens[2] != NULL)
     {
         print_error("Error\nBad texture format\n");
-        ft_free_split(tokens);//attention dont use ft_malloc inside ft_split
+        ft_free_split(tokens);
         return (false);
     }
-    if (ft_strcmp(tokens[0], "NO") == 0)//space at depart
-        ok = assign_texture(&p->no_texture, tokens[1]);
+    if (ft_strcmp(tokens[0], "NO") == 0)
+        var = assign_texture(&p->no_texture, tokens[1]);
     else if (ft_strcmp(tokens[0], "SO") == 0)
-        ok = assign_texture(&p->so_texture, tokens[1]);
+        var = assign_texture(&p->so_texture, tokens[1]);
     else if (ft_strcmp(tokens[0], "WE") == 0)
-        ok = assign_texture(&p->we_texture, tokens[1]);
+        var = assign_texture(&p->we_texture, tokens[1]);
     else if (ft_strcmp(tokens[0], "EA") == 0)
-        ok = assign_texture(&p->ea_texture, tokens[1]);
+        var = assign_texture(&p->ea_texture, tokens[1]);
     else
         print_error("Error\nUnknown texture identifier\n");
     ft_free_split(tokens);
-    return ok;
+    return var;
 }
