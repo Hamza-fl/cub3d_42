@@ -6,32 +6,31 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:02:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/10 14:53:35 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/13 15:23:53 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void my_mlx_pixel_put(t_image *img, int x, int y, int color)
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
 {
-	char *dst;
-	
+	char	*dst;
+
 	if (x < 0 || x >= img->width || y < 0 || y >= img->height)
-		return;
-	
+		return ;
 	dst = img->data + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
-void put_background(t_game *game)
+void	put_background(t_game *game)
 {
 	int	x;
 	int	y;
-	int half_heigh;
-	
+	int	half_heigh;
+
 	half_heigh = game->screen_height / 2;
-	y = 0;
-	while (y < half_heigh)
+	y = -1;
+	while (++y < half_heigh)
 	{
 		x = 0;
 		while (x < game->screen_width)
@@ -39,7 +38,6 @@ void put_background(t_game *game)
 			my_mlx_pixel_put(&game->screen, x, y, game->ceiling_color);
 			x++;
 		}
-		y++;
 	}
 	while (y < game->screen_height)
 	{
@@ -53,20 +51,10 @@ void put_background(t_game *game)
 	}
 }
 
-void put_hands(t_game *game)
+void	put_hands(t_game *game)
 {
-   static int frame = 0;
-   static int count = 0;
-   int index;
-
-   count++;
-   if (count >= 20)
-   {
-       frame++;
-       count = 0;
-   }
-   index = 4 + (frame % 3);
-   mlx_put_image_to_window(game->mlx, game->win, game->textures[index].img, 50, 20);
+	mlx_put_image_to_window(game->mlx, game->win, \
+		game->textures[4].img, 50, 20);
 }
 
 int	ft_game_loop(t_game *game)
@@ -76,7 +64,6 @@ int	ft_game_loop(t_game *game)
 	update_player(game);
 	put_background(game);
 	cast_rays(game);
-	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->screen.img, 0, 0);
 	put_hands(game);
 	return (0);
