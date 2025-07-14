@@ -26,7 +26,6 @@ int	mouse_move(int x, t_game *game)
 	return (0);
 }
 
-
 int	main(int ac, char **argv)
 {
 	t_parsing	p;
