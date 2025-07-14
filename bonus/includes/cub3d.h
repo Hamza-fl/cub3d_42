@@ -19,6 +19,13 @@ typedef struct s_line_node
 	struct s_line_node	*next;
 } t_line_node;
 
+
+#define MINI_MAP_WINDOW_WIDTH  20
+#define MINI_MAP_WINDOW_HEIGHT 20
+#define MINI_TILE_SIZE 5
+#define MINI_MAP_OFFSET_X 10
+#define MINI_MAP_OFFSET_Y 10
+
 #define KEY_ESC    53
 #define KEY_W      13
 #define KEY_S      1

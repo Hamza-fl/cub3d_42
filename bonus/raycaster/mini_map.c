@@ -6,89 +6,97 @@
 /*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 10:04:45 by asebban           #+#    #+#             */
-/*   Updated: 2025/07/10 10:50:56 by asebban          ###   ########.fr       */
+/*   Updated: 2025/07/14 17:33:57 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-
-#define MINI_MAP_WINDOW_WIDTH  20
-#define MINI_MAP_WINDOW_HEIGHT 20
-#define MINI_TILE_SIZE 5
-#define MINI_MAP_OFFSET_X 10
-#define MINI_MAP_OFFSET_Y 10
-
-
-void draw_square(t_image *img, int x, int y, int size, int color)
+void	draw_square(t_image *img, int pos[2], int size, int color)
 {
-    int i;
-    int j;
+	int	i;
+	int	j;
 
-    i = 0;
-    while (i < size)
-    {
-        j = 0;
-        while (j < size)
-        {
-            my_mlx_pixel_put(img, x + j, y + i, color);
-            j++;
-        }
-        i++;
-    }
+	i = 0;
+	while (i < size)
+	{
+		j = 0;
+		while (j < size)
+		{
+			my_mlx_pixel_put(img, pos[0] + j, pos[1] + i, color);
+			j++;
+		}
+		i++;
+	}
 }
 
-void draw_minimap_player(t_game *game)
+void	draw_minimap_player(t_game *game)
 {
-    int px = MINI_MAP_OFFSET_X + (int)(game->player.pos.x * MINI_TILE_SIZE);
-    int py = MINI_MAP_OFFSET_Y + (int)(game->player.pos.y * MINI_TILE_SIZE);
+	int	pos[2];
 
-    draw_square(&game->screen, px - 2, py - 2, 4, 0xFF0000); // Red dot  && -2 for centre the player 
+	pos[1] = MINI_MAP_OFFSET_Y + (int)(game->player.pos.y * MINI_TILE_SIZE);
+	pos[0] = MINI_MAP_OFFSET_X + (int)(game->player.pos.x * MINI_TILE_SIZE);
+	pos[0] -= 2;
+	pos[1] -= 2;
+	draw_square(&game->screen, pos, 4, 0xFF0000);
 }
 
-
-
-void draw_minimap(t_game *game)
+static void	get_tile_coordinates(t_game *game, int xy[2], int coords[2])
 {
-    int player_tile_x;
-    int player_tile_y;
+	int	player_tile_x;
+	int	player_tile_y;
+	int	window_start_x;
+	int	window_start_y;
 
-    player_tile_x = (int)game->player.pos.x;
-    player_tile_y = (int)game->player.pos.y;
-    int window_start_x = player_tile_x - MINI_MAP_WINDOW_WIDTH / 2;
-    int window_start_y = player_tile_y - MINI_MAP_WINDOW_HEIGHT / 2;
+	player_tile_x = (int)game->player.pos.x;
+	player_tile_y = (int)game->player.pos.y;
+	window_start_y = player_tile_y - MINI_MAP_WINDOW_HEIGHT / 2;
+	window_start_x = player_tile_x - MINI_MAP_WINDOW_WIDTH / 2;
+	coords[0] = window_start_x + xy[0];
+	coords[1] = window_start_y + xy[1];
+}
 
-    int y = 0;
-    int x = 0;
-    while (y < MINI_MAP_WINDOW_HEIGHT)
-    {
-        x = 0;
-        while (x < MINI_MAP_WINDOW_WIDTH)
-        {
-            int map_x = window_start_x + x;
-            int map_y = window_start_y + y;
+static void	draw_minimap_tile(t_game *game, int xy[2])
+{
+	int	coords[2];
+	int	screen_pos[2];
 
-            if (map_x >= 0 && map_x < game->map_width &&
-                map_y >= 0 && map_y < game->map_height)
-            {
-                int sx = MINI_MAP_OFFSET_X + x * MINI_TILE_SIZE;
-                int sy = MINI_MAP_OFFSET_Y + y * MINI_TILE_SIZE;
+	get_tile_coordinates(game, xy, coords);
+	if (coords[0] >= 0 && coords[0] < game->map_width
+		&& coords[1] >= 0 && coords[1] < game->map_height)
+	{
+		screen_pos[0] = MINI_MAP_OFFSET_X + xy[0] * MINI_TILE_SIZE;
+		screen_pos[1] = MINI_MAP_OFFSET_Y + xy[1] * MINI_TILE_SIZE;
+		if (game->map[coords[1]][coords[0]] == '1')
+			draw_square(&game->screen, screen_pos, MINI_TILE_SIZE, 0xFFFFFF);
+		else if (game->map[coords[1]][coords[0]] == 'D')
+			draw_square(&game->screen, screen_pos, MINI_TILE_SIZE, 0x00FF00);
+	}
+}
 
-                if (game->map[map_y][map_x] == '1')
-                {
-                    draw_square(&game->screen, sx, sy, MINI_TILE_SIZE, 0xFFFFFF);
-                }
-                else if (game->map[map_y][map_x] == 'D')
-                {
-                    draw_square(&game->screen, sx, sy, MINI_TILE_SIZE, 0x00FF00);
-                }
-            }
-            x++;
-        }
-        y++;
-    }
-    int px = MINI_MAP_OFFSET_X + (MINI_MAP_WINDOW_WIDTH / 2) * MINI_TILE_SIZE;
-    int py = MINI_MAP_OFFSET_Y + (MINI_MAP_WINDOW_HEIGHT / 2) * MINI_TILE_SIZE;
+void	draw_minimap(t_game *game)
+{
+	int	y;
+	int	x;
+	int	player_pos[2];
+	int	tile_xy[2];
 
-    draw_square(&game->screen, px - 2, py - 2, 4, 0xFF0000);
+	y = 0;
+	while (y < MINI_MAP_WINDOW_HEIGHT)
+	{
+		x = 0;
+		while (x < MINI_MAP_WINDOW_WIDTH)
+		{
+			tile_xy[0] = x;
+			tile_xy[1] = y;
+			draw_minimap_tile(game, tile_xy);
+			x++;
+		}
+		y++;
+	}
+	player_pos[0] = MINI_MAP_OFFSET_X
+		+ (MINI_MAP_WINDOW_WIDTH / 2) * MINI_TILE_SIZE - 2;
+	player_pos[1] = MINI_MAP_OFFSET_Y
+		+ (MINI_MAP_WINDOW_HEIGHT / 2) * MINI_TILE_SIZE - 2;
+	draw_square(&game->screen, player_pos, 4, 0xFF0000);
 }
