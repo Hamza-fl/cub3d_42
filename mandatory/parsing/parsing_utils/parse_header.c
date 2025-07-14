@@ -97,16 +97,12 @@ bool	parse_header(int fd, t_parsing *parsing, char **first_line)
 	if (header_count < 6)
 	{
 		print_error("Error\nNot all textures/colors provided.\n");
-		if (line)
-			free(line);
-		return (ft_malloc(0, 0), false);
+		return (free(line), ft_malloc(0, 0), false);
 	}
 	if (!*first_line)
 	{
 		print_error("Error\nUnexpected EOF before map.\n");
-		if (line)
-			free(line);
-		return (ft_malloc(0, 0), false);
+		return (free(line), ft_malloc(0, 0), false);
 	}
 	return (true);
 }

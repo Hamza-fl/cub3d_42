@@ -57,6 +57,7 @@ typedef struct s_parsing {
 	int			map_height;
 	t_vector	player_pos;
 	char		player_dir;
+		bool	temp_player_found;
 } t_parsing;
 
 // Enhanced texture structure for better management
@@ -122,6 +123,15 @@ typedef struct s_image {
 	int     width;      // Image width
 	int     height;     // Image height
 } t_image;
+
+typedef struct s_scan
+{
+    char     **map_lines;
+    int        height;
+    int        width;
+    t_parsing *p;
+    bool      *player_found;
+}               t_scan;
 
 typedef struct s_game {
 	void		*mlx;

@@ -147,13 +147,22 @@ typedef struct s_game {
 	double		old_time;       // Time of previous frame
 } t_game;
 
+
+typedef struct s_scan
+{
+    char     **map_lines;
+    int        height;
+    int        width;
+    t_parsing *p;
+    bool      *player_found;
+}               t_scan;
+
 // Function prototypes
 bool	ft_parsing(const char *filename, t_parsing *parsing);
-
+bool	is_door_valid(char **map_lines, int x, int y);
 ////////////Parsing_utils
 bool	is_texture_line(const char *line);
 bool	line_is_empty(const char *line);
-void	init_parsing(t_parsing *p);
 void	print_error(const char *msg);
 void	ft_free_split(char **split);
 bool	set_texture_path(char *line, t_parsing *p);
@@ -168,7 +177,7 @@ bool	validate_map(char **map_lines, int height, int width, t_parsing *p);
 bool	allocate_map_matrix(char **raw_map_lines, int map_line_count, int max_width, t_parsing *p);
 bool	parse_map_and_allocate(int fd, char *first_map_line, t_parsing *p);
 bool	ft_parsing(const char *filename, t_parsing *parsing);
-
+void	ft_initialisation(t_parsing *p);
 //init the game
 int	ft_init_game(t_game *game, t_parsing *parsing);
 //game loop

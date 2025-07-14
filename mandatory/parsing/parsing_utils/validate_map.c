@@ -12,124 +12,92 @@
 
 #include "../../includes/cub3d.h"
 
-bool  scan_and_locate_player(char **map_lines,
-									 int height,
-									 int width,
-									 t_parsing *p)
+static bool	is_valid_map_char(char ch)
 {
-	bool player_found = false;
-	int   r = 0;
-	char ch;
+	if (ch == '0' || ch == '1' || ch == ' '
+		|| ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W')
+		return (true);
+	print_error("Error\nInvalid character\n");
+	return (false);
+}
 
+static bool	process_player_char(char ch, int r, int c, t_scan *scan)
+{
+	if (ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W')
+	{
+		if (*scan->player_found)
+		{
+			print_error("Error\nMultiple player starting positions found\n");
+			return (false);
+		}
+		*scan->player_found = true;
+		scan->p->player_dir = ch;
+		scan->p->player_pos.x = c + 0.5;
+		scan->p->player_pos.y = r + 0.5;
+	}
+	return (true);
+}
+
+static bool	check_map_enclosure(char ch, int r, int c, t_scan *scan)
+{
+	if ((r == 0 || r == scan->height - 1 || c == 0 || c == scan->width - 1)
+		&& (ch == '0' || ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W'))
+	{
+		print_error("Error\nMap not closed by walls\n");
+		return (false);
+	}
+	return (true);
+}
+
+static bool	scan_row(int r, t_scan *scan)
+{
+	int		c;
+	int		len;
+	char	ch;
+
+	c = 0;
+	len = ft_strlen(scan->map_lines[r]);
+	while (c < scan->width)
+	{
+		if (c < len)
+			ch = scan->map_lines[r][c];
+		else
+			ch = ' ';
+		if (!is_valid_map_char(ch))
+			return (false);
+		if (!process_player_char(ch, r, c, scan))
+			return (false);
+		if (!check_map_enclosure(ch, r, c, scan))
+			return (false);
+		++c;
+	}
+	return (true);
+}
+
+bool	scan_and_locate_player(char **map_lines,
+		int height, int width, t_parsing *p)
+{
+	bool	player_found;
+	t_scan	scan;
+	int		r;
+
+	player_found = false;
+	scan.map_lines = map_lines;
+	scan.height = height;
+	scan.width = width;
+	scan.p = p;
+	scan.player_found = &player_found;
+	r = 0;
 	while (r < height)
 	{
-		int len = ft_strlen(map_lines[r]);
-		int c   = 0;
-
-		while (c < width)
-		{
-			if (c < len)
-				ch = map_lines[r][c];
-			else 
-				ch = ' ';
-			if (ch != '0' && ch != '1' && ch != ' ' &&
-				ch != 'N' && ch != 'S' && ch != 'E' && ch != 'W')
-			{
-				print_error("Error\nInvalid character\n");
-				return false;
-			}
-			if (ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W')
-			{
-				if (player_found)
-				{
-					print_error("Error\nMultiple player starting positions found\n");
-					return false;
-				}
-				player_found      = true;
-				p->player_dir     = ch;
-				p->player_pos.x   = c + 0.5;
-				p->player_pos.y   = r + 0.5;//check why 0.5 exactly
-			}
-			if ((r == 0 || r == height - 1 || c == 0 || c == width - 1) &&
-				(ch == '0' || ch == 'N' || ch == 'S' ||
-				 ch == 'E' || ch == 'W'))
-			{
-				print_error("Error\nMap not closed by walls\n");
-				return false;
-			}
-			c++;
-		}
-		r++;
+		if (!scan_row(r, &scan))
+			return (false);
+		++r;
 	}
 	if (!player_found)
 	{
 		print_error("Error\nNo player starting position found in map\n");
-		return false;
+		return (false);
 	}
-	return true;
+	return (true);
 }
-
-bool check_interior_leaks(char **map_lines, int height, int width)
-{
-	int r = 1;
-	while (r < height - 1)
-	{
-		int len   = ft_strlen(map_lines[r]);
-		int c     = 1;
-
-		while (c < width - 1)
-		{
-			char ch;
-			if (c < len)
-				ch = map_lines[r][c];
-			else
-				ch = ' ';
-
-			if (ch == '0' || ch == 'N' || ch == 'S' ||
-				ch == 'E' || ch == 'W')
-			{
-				char left;
-				if (c - 1 < len)
-					left = map_lines[r][c - 1];
-				else
-					left = ' ';
-				char right;
-				if (c + 1 < len)
-					right = map_lines[r][c + 1];
-				else
-					right = ' ';
-				char up;
-				if (r - 1 >= 0)
-				{
-					int len_up = ft_strlen(map_lines[r - 1]);
-					if (c < len_up)
-						up = map_lines[r - 1][c];
-					else
-						up = ' ';
-				}
-				else
-					up = ' ';
-				char down;
-				if (r + 1 < height)
-				{
-					int len_down = ft_strlen(map_lines[r + 1]);
-					if (c < len_down)
-						down = map_lines[r + 1][c];
-					else
-						down = ' ';
-				}
-				else
-					down = ' ';
-				if (left == ' ' || right == ' ' || up == ' ' || down == ' ')
-				{
-					print_error("Error\nMap leak detected\n");
-					return false;
-				}
-			}
-			c++;
-		}
-		r++;
-	}
-	return true;
-}
-

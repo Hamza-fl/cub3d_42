@@ -43,7 +43,8 @@ SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
 		mandatory/raycaster/dda.c \
 		mandatory/raycaster/calc_wall.c \
 		mandatory/src/main.c \
-		mandatory/parsing/parsing_utils/map_utils.c
+		mandatory/parsing/parsing_utils/map_utils.c \
+		mandatory/parsing/parsing_utils/map_utils1.c
 
 # Bonus source files
 BONUS_SRC = bonus/parsing/parsing_utils/alloc_matrix.c \
@@ -66,7 +67,9 @@ BONUS_SRC = bonus/parsing/parsing_utils/alloc_matrix.c \
 		bonus/raycaster/dda.c \
 		bonus/raycaster/calc_wall.c \
 		bonus/src/main.c \
-		bonus/raycaster/mini_map.c
+		bonus/raycaster/mini_map.c \
+		mandatory/parsing/parsing_utils/map_utils.c \
+		mandatory/parsing/parsing_utils/map_utils1.c
 
 OBJ = $(SRC:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
