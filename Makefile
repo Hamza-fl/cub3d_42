@@ -59,9 +59,11 @@ BONUS_SRC = bonus/parsing/parsing_utils/alloc_matrix.c \
 		bonus/parsing/parsing_utils/validate_map.c \
 		bonus/parsing/ft_parsing.c \
 		bonus/raycaster/init_game.c \
+		bonus/raycaster/init_game_utils.c \
 		bonus/raycaster/game_loop.c \
 		bonus/raycaster/cleanup_game.c \
 		bonus/raycaster/input_handling.c \
+		bonus/raycaster/input_handling_utils.c \
 		bonus/raycaster/raycaster.c \
 		bonus/raycaster/init_pos.c \
 		bonus/raycaster/dda.c \

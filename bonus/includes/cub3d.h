@@ -130,6 +130,9 @@ typedef struct s_game {
 	void		*win;
 	int			screen_width;
 	int			screen_height;
+	int			draw_start;
+	int			draw_end;
+	int			line_height;
 	t_texture	textures[8];
 	int			floor_color;
 	int			ceiling_color;
@@ -202,8 +205,12 @@ void	init_first_step(t_game *game);
 void	perform_dda(t_game *game);
 
 void	calc_player_to_wall(t_game *game);
-void	calc_wall_line(t_game *game, int *start, int *end, int *line);
+void	calc_wall_line(t_game *game);
 //rotate
 void rotate_player(t_game *game, double angle);
 void draw_minimap(t_game *game);
+int	init_player(t_game *game, t_parsing *parsing);
+int	key_press(int keycode, t_game *game);
+int	key_release(int keycode, t_game *game);
+int	select_texture(t_game *game);
 #endif
