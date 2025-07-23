@@ -15,10 +15,10 @@ BONUS_LIBFT_DIR = bonus/libft
 BONUS_LIBFT_LIB = bonus/libft/libft.a
 BONUS_LIBFT_HEADER = $(BONUS_LIBFT_DIR)/libft.h
 
-HEADER = includes/cub3d.h 
+HEADER = mandatory/includes/cub3d.h
+BONUS_HEADER = bonus/includes/cub3d.h
 ALL_HEADERS = $(HEADER) $(LIBFT_HEADER)
-BONUS_ALL_HEADERS = $(HEADER) $(BONUS_LIBFT_HEADER)
-MLX_DIR = mandatory/minilibx
+BONUS_ALL_HEADERS = $(BONUS_HEADER) $(BONUS_LIBFT_HEADER)
 
 # Mandatory source files
 SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
@@ -77,10 +77,10 @@ OBJ = $(SRC:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 
 # Default target builds mandatory
-all: $(LIBFT_LIB) $(MLX_LIB) $(NAME)
+all: $(LIBFT_LIB) $(NAME)
 
 # Bonus target
-bonus: $(BONUS_LIBFT_LIB) $(MLX_LIB) $(BONUS_NAME)
+bonus: $(BONUS_LIBFT_LIB) $(BONUS_NAME)
 
 # Build mandatory libft
 $(LIBFT_LIB): force_libft

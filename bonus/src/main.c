@@ -12,12 +12,12 @@
 
 #include "../includes/cub3d.h"
 
-int	mouse_move(int x, t_game *game)
+int	mouse_move(int x, int y, t_game *game)
 {
-	static int	last_x;
+	static int	last_x = -1;
 	int			delta_x;
 
-	last_x = -1;
+	(void)y;
 	if (last_x == -1)
 		last_x = x;
 	delta_x = x - last_x;
