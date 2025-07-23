@@ -37,17 +37,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (str);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char			*res;
-
-	res = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char)); // ft_malloc
-	if (!res)
-		return (NULL);
-	fill_string(res, s1, s2);
-	return (res);
-}
-
 void	fill_string(char *res, char *s1, char *s2)
 {
 	unsigned int	i;
@@ -62,3 +51,15 @@ void	fill_string(char *res, char *s1, char *s2)
 		res[i++] = s2[j++];
 	res[i] = '\0';
 }
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char			*res;
+
+	res = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char)); // ft_malloc
+	if (!res)
+		return (NULL);
+	fill_string(res, s1, s2);
+	return (res);
+}
+

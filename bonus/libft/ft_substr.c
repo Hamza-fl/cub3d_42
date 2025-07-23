@@ -3,48 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 08:36:48 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/26 20:16:30 by hfalati          ###   ########.fr       */
+/*   Created: 2024/10/25 14:57:16 by asebban           #+#    #+#             */
+/*   Updated: 2024/11/04 13:08:22 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*allocate_str(size_t len)
+static char	*allocate_empty_string(void)
 {
-	char	*str;
+	char	*ptr;
 
-	str = (char *)malloc(len * sizeof(char) + 1);
-	if (!str)
+	ptr = malloc(1);
+	if (!ptr)
 		return (NULL);
-	str[len] = '\0';
-	return (str);
+	ptr[0] = '\0';
+	return (ptr);
+}
+
+static size_t	calculate_length(size_t str_len, unsigned int start, size_t len)
+{
+	if (start + len > str_len)
+		return (str_len - start);
+	return (len);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	novel_len;
-	char	*str;
+	char	*ptr;
 	size_t	i;
+	size_t	str_len;
 
 	if (!s)
-		return (0);
-	novel_len = ft_strlen(s);
-	if (start >= novel_len)
-		return (allocate_str(0));
-	if (len > novel_len - start)
-		len = novel_len - start;
-	str = allocate_str(len);
-	if (!str)
+		return (NULL);
+	str_len = ft_strlen(s);
+	if (start >= str_len)
+		return (allocate_empty_string());
+	len = calculate_length(str_len, start, len);
+	ptr = malloc(len + 1);
+	if (!ptr)
 		return (NULL);
 	i = 0;
-	while (i < len && s[start + i])
+	while (s[start + i] && i < len)
 	{
-		str[i] = s[start + i];
+		ptr[i] = s[start + i];
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	ptr[i] = '\0';
+	return (ptr);
 }

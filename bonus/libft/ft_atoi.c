@@ -3,56 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 13:52:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/23 20:29:02 by hfalati          ###   ########.fr       */
+/*   Created: 2024/10/24 12:48:55 by asebban           #+#    #+#             */
+/*   Updated: 2024/11/05 09:00:04 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	jump(const char *str, int *i)
+static int	spaces(const char *str)
 {
-	while (str[*i] == ' ' || (str[*i] >= 9 && str[*i] <= 13))
-		(*i)++;
-	return (*i);
+	int	i;
+
+	i = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+	{
+		i++;
+	}
+	return (i);
 }
 
-static int	check_sg(const char *str, int *i, int *sign)
+static int	signe_char(char c)
 {
-	if (str[*i] == '-' || str[*i] == '+')
+	if (c == '-')
 	{
-		if (str[*i] == '-')
-			*sign = -1;
-		(*i)++;
+		return (-1);
 	}
-	return (*i);
+	return (1);
 }
 
 int	ft_atoi(const char *str)
 {
-	unsigned long	result;
-	int				sign;
 	int				i;
+	int				signe;
+	unsigned long	result;
 
+	i = spaces(str);
 	result = 0;
-	sign = 1;
-	i = 0;
-	jump(str, &i);
-	check_sg(str, &i, &sign);
+	signe = 1;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		signe = signe_char(str[i++]);
+	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		if (result > 922337203685477580
 			|| (result == 922337203685477580 && (str[i] - '0') > 7))
 		{
-			if (sign == 1)
+			if (signe == 1)
 				return (-1);
 			else
 				return (0);
 		}
-		result = result * 10 + (str[i] - '0');
+		result = (result * 10) + (str[i] - '0');
 		i++;
 	}
-	return ((int)(result * sign));
+	return ((int)(result * signe));
 }

@@ -55,29 +55,38 @@ static bool	assign_texture(char **dest, const char *path)
 
 bool	set_texture_path(char *line, t_parsing *p)
 {
-	char	**tokens;
+	char	*id;
+	char	*path;
 	bool	ok;
 
 	ok = false;
 	if (!line || !p)
 		return (false);
-	tokens = ft_split(line, ' ');
-	if (!tokens || !tokens[0] || !tokens[1] || tokens[2] != NULL)
+	while (*line == ' ')
+		line++;
+	id = line;
+	while (*line && *line != ' ')
+		line++;
+	if (*line)
+		*line++ = '\0';
+	while (*line == ' ')
+		line++;
+	if (*line == '\0')
 	{
-		print_error("Error\nBad texture format\n");
-		ft_free_split(tokens);
+		print_error("Error\nMissing texture path\n");
 		return (false);
 	}
-	if (ft_strcmp(tokens[0], "NO") == 0)
-		ok = assign_texture(&p->no_texture, tokens[1]);
-	else if (ft_strcmp(tokens[0], "SO") == 0)
-		ok = assign_texture(&p->so_texture, tokens[1]);
-	else if (ft_strcmp(tokens[0], "WE") == 0)
-		ok = assign_texture(&p->we_texture, tokens[1]);
-	else if (ft_strcmp(tokens[0], "EA") == 0)
-		ok = assign_texture(&p->ea_texture, tokens[1]);
+	path = line;
+	if (ft_strcmp(id, "NO") == 0)
+		ok = assign_texture(&p->no_texture, path);
+	else if (ft_strcmp(id, "SO") == 0)
+		ok = assign_texture(&p->so_texture, path);
+	else if (ft_strcmp(id, "WE") == 0)
+		ok = assign_texture(&p->we_texture, path);
+	else if (ft_strcmp(id, "EA") == 0)
+		ok = assign_texture(&p->ea_texture, path);
 	else
 		print_error("Error\nUnknown texture identifier\n");
-	ft_free_split(tokens);
+
 	return (ok);
 }

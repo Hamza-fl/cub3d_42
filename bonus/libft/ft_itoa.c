@@ -3,61 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 09:01:45 by hfalati           #+#    #+#             */
-/*   Updated: 2025/06/26 20:16:57 by hfalati          ###   ########.fr       */
+/*   Created: 2024/10/26 13:07:20 by asebban           #+#    #+#             */
+/*   Updated: 2025/07/23 21:07:18 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_len(long n)
+static unsigned int	len_number(int number)
 {
-	size_t	len;
+	unsigned int	length;
 
-	len = 0;
-	if (n == 0)
+	length = 0;
+	if (number == 0)
 		return (1);
-	if (n < 0)
-		len++;
-	while (n != 0)
+	if (number < 0)
+		length += 1;
+	while (number != 0)
 	{
-		n /= 10;
-		len++;
+		number /= 10;
+		length++;
 	}
-	return (len);
+	return (length);
 }
 
-static void	num_converter(char *str, long n, size_t len)
+static void	fill_string1(char *string, unsigned int number, unsigned int length)
 {
-	while (len > 0)
+	while (number != 0)
 	{
-		len--;
-		str[len] = (n % 10) + '0';
-		n /= 10;
-		if (n == 0 && len == 1 && str[0] == '-')
-			break ;
+		string[length - 1] = (number % 10) + '0';
+		number /= 10;
+		length--;
 	}
 }
 
-char	*ft_itoa(int nb)
+char	*ft_itoa(int n)
 {
-	char	*str;
-	size_t	len;
-	long	n;
+	char			*string;
+	unsigned int	number;
+	unsigned int	length;
 
-	n = nb;
-	len = count_len(n);
-	str = (char *)malloc((len + 1) * sizeof(char));
-	if (str == NULL)
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	length = len_number(n);
+	string = (char *)malloc(sizeof(char) * (length + 1));
+	if (string == NULL)
 		return (NULL);
-	str[len] = '\0';
 	if (n < 0)
 	{
-		n = -n;
-		str[0] = '-';
+		string[0] = '-';
+		number = -n;
 	}
-	num_converter(str, n, len);
-	return (str);
+	else
+		number = n;
+	string[length] = '\0';
+	if (number == 0)
+		string[0] = '0';
+	else
+		fill_string1(string, number, length);
+	return (string);
 }

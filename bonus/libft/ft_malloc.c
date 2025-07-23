@@ -6,61 +6,66 @@
 /*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:17:02 by asebban           #+#    #+#             */
-/*   Updated: 2025/06/26 22:17:03 by asebban          ###   ########.fr       */
+/*   Updated: 2025/07/23 20:54:54 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	*err(int c)
+void    free_all(t_collect **head)
 {
-	(void)c;
-	perror ("cub3d\n"); //----check if perror need \n and if perror allowd
-	return (NULL);
+    t_collect    *current;
+    t_collect    *next;
+
+    if (!head || !*head)
+        return;
+
+    current = *head;
+    while (current)
+    {
+        next = current->next;
+        free(current->data);
+        free(current);
+        current = next;
+    }
+    *head = NULL;
 }
 
-void	free_all(t_collect **head)
+void    *ft_malloc(size_t size, int    mode)
 {
-	t_collect	*current;
-	t_collect	*next;
+    static t_collect    *head;
+    t_collect            *node;
+    void *data;
 
-	if (!*head || !head)
-		return ;
-	current = *head;
-	while (current)
-	{
-		next = current->next;
-		free(current->data);
-		free(current);
-		current = next;
-	}
-	*head = NULL;
-}
+    if (mode == 1)
+    {
+        data = malloc(size);
+        if (!data)
+        {
+            perror("cub3d");
+            ft_malloc(0, 0);
+            return NULL;
+        }
 
-void	*ft_malloc(size_t size, int mode)
-{
-	static t_collect	*head;
-	void				*data;
-	t_collect			*node;
+        node = malloc(sizeof(t_collect));
+        if (!node)
+        {
+            free(data);
+            perror("cub3d");
+            ft_malloc(0, 0);
+            return NULL;
+        }
 
-	data = NULL;
-	node = NULL;
-	if (mode == 1)
-	{
-		data = malloc(size);
-		if (!data)
-			return (err(25));// before return call ft_malloc (0,0);
-		node = malloc(sizeof(t_collect));
-		if (!node)
-			return (free(data), err(25));// before return call ft_malloc (0,0);
-		node->data = data;
-		node->next = head;
-		head = node;
-	}
-	else if (mode == 0)
-	{
-		free_all(&head);
-		head = NULL;
-	}
-	return (data);
+        node->data = data;
+        node->next = head;
+        head = node;
+
+        return data;
+    }
+    else if (mode == 0)
+    {
+        free_all(&head);
+        head = NULL;
+    }
+    return NULL;
 }
