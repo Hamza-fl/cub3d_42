@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:02:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/13 15:23:53 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/08/01 08:07:02 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	put_hands(t_game *game)
 int	ft_game_loop(t_game *game)
 {
 	if (!game->running)
-		return (0);
+		exit(0);
 	update_player(game);
 	put_background(game);
 	cast_rays(game);

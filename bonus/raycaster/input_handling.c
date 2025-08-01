@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 11:14:00 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/14 17:12:25 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/30 07:00:30 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,27 @@ int	is_collision(t_game *game, t_vector new_pos)
 	{
 		return (1);
 	}
-	if (game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x + 0.05)] == 'D' ||
-		game->map[(int)(new_pos.y + 0.05)][(int)(new_pos.x - 0.05)] == 'D' ||
-		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x + 0.05)] == 'D' ||
-		game->map[(int)(new_pos.y - 0.05)][(int)(new_pos.x - 0.05)] == 'D')
+	int corners[4][2] = {
+		{(int)(new_pos.y + 0.05), (int)(new_pos.x + 0.05)},
+		{(int)(new_pos.y + 0.05), (int)(new_pos.x - 0.05)},
+		{(int)(new_pos.y - 0.05), (int)(new_pos.x + 0.05)},
+		{(int)(new_pos.y - 0.05), (int)(new_pos.x - 0.05)}
+	};
+	
+	for (int i = 0; i < 4; i++) // need to convert to while
 	{
-		if (game->door_status == 0)
-			return (1);
+		int y = corners[i][0];
+		int x = corners[i][1];
+		if (y >= 0 && y < game->map_height && x >= 0 && x < game->map_width)
+		{
+			if (game->map[y][x] == 'D')
+			{
+				if (game->door_status[y][x] == 0)
+					return (1);
+			}
+		}
 	}
+	
 	return (0);
 }
 

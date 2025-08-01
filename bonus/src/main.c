@@ -26,21 +26,28 @@ int	mouse_move(int x, int y, t_game *game)
 	return (0);
 }
 
+
+void	_free()
+{
+	system("leaks cub3d_bonus");
+}
+
 int	main(int ac, char **argv)
 {
 	t_parsing	p;
 	t_game		g;
 
+	atexit(_free);
 	if (ac != 2)
 	{
-		print_error("Error :Usage: ./cub3D <map.cub>\n");
+		ft_print_error("Error :Usage: ./cub3D <map.cub>\n");
 		return (EXIT_FAILURE);
 	}
 	if (!ft_parsing(argv[1], &p))
-		return (print_error("Error :Parsing failed\n"), EXIT_FAILURE);
+		exit(1);
 	if (!ft_init_game(&g, &p))
 	{
-		print_error("Error :Game initialization failed\n");
+		ft_print_error("Error :Game initialization failed\n");
 		return (cleanup_game(&g), EXIT_FAILURE);
 	}
 	mlx_hook(g.win, 2, 1L << 0, key_press, &g);

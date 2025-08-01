@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 17:38:07 by asebban           #+#    #+#             */
-/*   Updated: 2025/07/23 20:28:52 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/08/01 06:06:57 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,13 +149,13 @@ typedef struct s_game
 	int			draw_start;
 	int			draw_end;
 	int			line_height;
-	t_texture	textures[8];
+	t_texture	textures[16];
 	int			floor_color;
 	int			ceiling_color;
 	char		**map;
+	int			**door_status;
 	int			map_width;
 	int			map_height;
-	int			door_status;
 	t_player	player;
 	t_ray		ray;
 	t_keys		keys;
@@ -174,11 +174,12 @@ typedef struct s_scan
 	bool		*player_found;
 }	t_scan;
 
+void	clean_map_tex(t_game *game, t_parsing *parsing);
+void	free_textures(t_parsing *p);
 bool	ft_parsing(const char *filename, t_parsing *parsing);
 bool	is_door_valid(char **map_lines, int x, int y);
 bool	is_texture_line(const char *line);
 bool	line_is_empty(const char *line);
-void	print_error(const char *msg);
 void	ft_free_split(char **split);
 bool	set_texture_path(char *line, t_parsing *p);
 bool	file_has_xpm_extension(const char *path);
@@ -194,6 +195,9 @@ bool	allocate_map_matrix(char **raw_map_lines,
 			int map_line_count, int max_width, t_parsing *p);
 bool	parse_map_and_allocate(int fd, char *first_map_line, t_parsing *p);
 bool	ft_parsing(const char *filename, t_parsing *parsing);
+bool	check_interior_leaks(char **map_lines, int height, int width);
+bool	scan_and_locate_player(char **map_lines, int height, \
+	int width, t_parsing *p);
 void	ft_initialisation(t_parsing *p);
 int		ft_init_game(t_game *game, t_parsing *parsing);
 int		ft_game_loop(t_game *game);
@@ -216,5 +220,34 @@ int		init_player(t_game *game, t_parsing *parsing);
 int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
 int		select_texture(t_game *game);
+
+
+
+//------
+
+bool	ft_parsing(const char *filename, t_parsing *parsing);
+bool	is_texture_line(const char *line);
+bool	line_is_empty(const char *line);
+void	ft_initialisation(t_parsing *p);
+void	ft_print_error(const char *msg);
+void	ft_free_split(char **split);
+bool	set_texture_path(char *line, t_parsing *p);
+bool	file_has_xpm_extension(const char *path);
+bool	set_ceiling_color(char *line, t_parsing *p);
+bool	set_floor_color(char *line, t_parsing *p);
+bool	ft_str_isnumeric(const char *s);
+bool	split_rgb(const char *s, int rgb[3]);
+bool	ft_parse_header(int fd, t_parsing *parsing, char **first_line);
+bool	ft_collect(int fd, char *first_line,
+		char ***out_lines, int *num_lines);
+bool	validate_map(char **map_lines, int height, int width, t_parsing *p);
+bool	allocate_map_matrix(char **raw_map_lines, int map_line_count, \
+	int max_width, t_parsing *p);
+bool	ft_parse_map(int fd, char *first_map_line, t_parsing *p);
+bool	ft_parsing(const char *filename, t_parsing *parsing);
+bool	check_interior_leaks(char **map_lines, int height, int width);
+bool	scan_and_locate_player(char **map_lines, int height, \
+	int width, t_parsing *p);
+bool is_valide_map(char **map_lines, int height, int width, t_parsing *p);
 
 #endif

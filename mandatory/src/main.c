@@ -19,14 +19,14 @@ int	main(int ac, char **argv)
 
 	if (ac != 2)
 	{
-		print_error("Error :Usage: ./cub3D <map.cub>\n");
+		ft_print_error("Error :Usage: ./cub3D <map.cub>\n"); //check should be "error \n and the error type" like in the subject where is \n ?????????????
 		return (EXIT_FAILURE);
 	}
 	if (!ft_parsing(argv[1], &p))
-		return (print_error("Error :Parsing failed\n"), EXIT_FAILURE);
+		return (ft_print_error("Error :Parsing failed\n"), EXIT_FAILURE); //check should be "error \n and the error type" like in the subject where is \n ?????????????
 	if (!ft_init_game(&g, &p))
 	{
-		print_error("Error :Game initialization failed\n");
+		ft_print_error("Error :Game initialization failed\n"); //check should be "error \n and the error type" like in the subject where is \n ?????????????
 		return (cleanup_game(&g), EXIT_FAILURE);
 	}
 	mlx_hook(g.win, 2, 1L << 0, key_press, &g);

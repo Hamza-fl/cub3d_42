@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-void	print_error(const char *msg)
+void	ft_print_error(const char *msg)
 {
 	if (!msg)
 		return ;
@@ -54,15 +54,11 @@ bool	line_is_empty(const char *line)
 
 bool	is_texture_line(const char *line)
 {
-	if (!line)
-		return (false);
-	if (ft_strncmp(line, "NO ", 3) == 0)
-		return (true);
-	if (ft_strncmp(line, "SO ", 3) == 0)
-		return (true);
-	if (ft_strncmp(line, "WE ", 3) == 0)
-		return (true);
-	if (ft_strncmp(line, "EA ", 3) == 0)
+	while (*line == ' ' || *line == '\t')
+		line++;
+	if ((ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0
+			|| ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0)
+		&& (line[2] == ' ' || line[2] == '\t'))
 		return (true);
 	return (false);
 }

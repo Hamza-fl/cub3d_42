@@ -21,16 +21,16 @@ ALL_HEADERS = $(HEADER) $(LIBFT_HEADER)
 BONUS_ALL_HEADERS = $(BONUS_HEADER) $(BONUS_LIBFT_HEADER)
 
 # Mandatory source files
-SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
-		mandatory/parsing/parsing_utils/check_xpm.c \
-		mandatory/parsing/parsing_utils/collect_map_lines.c \
+SRC = mandatory/parsing/parsing_utils/ft_alloc_matrix.c \
+		mandatory/parsing/parsing_utils/ft_check_xpm.c \
+		mandatory/parsing/parsing_utils/ft_collect.c \
 		mandatory/parsing/parsing_utils/ft_print_error.c \
-		mandatory/parsing/parsing_utils/parse_header.c \
-		mandatory/parsing/parsing_utils/parse_map.c \
-		mandatory/parsing/parsing_utils/set_colors.c \
-		mandatory/parsing/parsing_utils/set_texture_path.c \
-		mandatory/parsing/parsing_utils/split_rgb.c \
-		mandatory/parsing/parsing_utils/validate_map.c \
+		mandatory/parsing/parsing_utils/ft_parse_header.c \
+		mandatory/parsing/parsing_utils/ft_parse_map.c \
+		mandatory/parsing/parsing_utils/ft_set_colors.c \
+		mandatory/parsing/parsing_utils/ft_set_texture_path.c \
+		mandatory/parsing/parsing_utils/ft_split_rgb.c \
+		mandatory/parsing/parsing_utils/ft_check_validation.c \
 		mandatory/parsing/ft_parsing.c \
 		mandatory/raycaster/init_game.c \
 		mandatory/raycaster/init_game_utils.c \
@@ -43,20 +43,20 @@ SRC = mandatory/parsing/parsing_utils/alloc_matrix.c \
 		mandatory/raycaster/dda.c \
 		mandatory/raycaster/calc_wall.c \
 		mandatory/src/main.c \
-		mandatory/parsing/parsing_utils/map_utils.c \
-		mandatory/parsing/parsing_utils/map_utils1.c
+		mandatory/parsing/parsing_utils/ft_check_leaks.c \
+		mandatory/parsing/parsing_utils/ft_scan_map.c
 
 # Bonus source files
-BONUS_SRC = bonus/parsing/parsing_utils/alloc_matrix.c \
-		bonus/parsing/parsing_utils/check_xpm.c \
-		bonus/parsing/parsing_utils/collect_map_lines.c \
+BONUS_SRC = bonus/parsing/parsing_utils/ft_alloc_matrix.c \
+		bonus/parsing/parsing_utils/ft_check_xpm.c \
+		bonus/parsing/parsing_utils/ft_collect.c \
 		bonus/parsing/parsing_utils/ft_print_error.c \
-		bonus/parsing/parsing_utils/parse_header.c \
-		bonus/parsing/parsing_utils/parse_map.c \
-		bonus/parsing/parsing_utils/set_colors.c \
-		bonus/parsing/parsing_utils/set_texture_path.c \
-		bonus/parsing/parsing_utils/split_rgb.c \
-		bonus/parsing/parsing_utils/validate_map.c \
+		bonus/parsing/parsing_utils/ft_parse_header.c \
+		bonus/parsing/parsing_utils/ft_parse_map.c \
+		bonus/parsing/parsing_utils/ft_set_colors.c \
+		bonus/parsing/parsing_utils/ft_set_texture_path.c \
+		bonus/parsing/parsing_utils/ft_split_rgb.c \
+		bonus/parsing/parsing_utils/ft_check_validation.c \
 		bonus/parsing/ft_parsing.c \
 		bonus/raycaster/init_game.c \
 		bonus/raycaster/init_game_utils.c \
@@ -70,8 +70,8 @@ BONUS_SRC = bonus/parsing/parsing_utils/alloc_matrix.c \
 		bonus/raycaster/calc_wall.c \
 		bonus/src/main.c \
 		bonus/raycaster/mini_map.c \
-		mandatory/parsing/parsing_utils/map_utils.c \
-		mandatory/parsing/parsing_utils/map_utils1.c
+		bonus/parsing/parsing_utils/ft_check_leaks.c \
+		bonus/parsing/parsing_utils/ft_scan_map.c
 
 OBJ = $(SRC:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)

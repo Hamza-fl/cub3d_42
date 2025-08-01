@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:02:03 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/13 15:00:52 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/08/01 07:51:54 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int	init_textures(t_game *game, t_parsing *parsing)
 													&game->textures[i].height);
 		if (!game->textures[i].img)
 		{
-			print_error("Error: Could not load texture\n");
-			return (0);
+			ft_print_error("Error: Could not load texture\n");
+			
+			exit (0);
 		}
 		game->textures[i].data = mlx_get_data_addr(game->textures[i].img, \
 												&game->textures[i].bpp, \
@@ -62,6 +63,8 @@ void	init_keys(t_keys *keys)
 
 void	init_game_data(t_game *game, t_parsing *parsing)
 {
+	int	i;
+
 	game->screen.width = game->screen_width;
 	game->screen.height = game->screen_height;
 	game->map = parsing->map;
@@ -69,15 +72,22 @@ void	init_game_data(t_game *game, t_parsing *parsing)
 	game->map_width = parsing->map_width;
 	game->floor_color = parsing->floor_color;
 	game->ceiling_color = parsing->ceiling_color;
+	i = 0;
+	while (i < 5)
+	{
+		game->textures[i].img = NULL;
+		i++;
+	}
 }
 
 int	ft_init_game(t_game *game, t_parsing *parsing)
 {
+	game->screen_height = SCREEN_HEIGHT;
+	game->screen_width = SCREEN_WIDTH;
+	init_game_data(game, parsing);
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (0);
-	game->screen_height = SCREEN_HEIGHT;
-	game->screen_width = SCREEN_WIDTH;
 	game->win = mlx_new_window(game->mlx, game->screen_width, \
 									game->screen_height, "Cub3D");
 	if (!game->win)
@@ -88,7 +98,6 @@ int	ft_init_game(t_game *game, t_parsing *parsing)
 		return (0);
 	game->screen.data = mlx_get_data_addr(game->screen.img, &game->screen.bpp, \
 								&game->screen.line_len, &game->screen.endian);
-	init_game_data(game, parsing);
 	if (!init_player(game, parsing))
 		return (0);
 	if (!init_textures(game, parsing))

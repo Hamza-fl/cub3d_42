@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 11:09:45 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/14 17:08:59 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/27 21:26:38 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	calc_wall_line(t_game *game)
 int	select_texture(t_game *game)
 {
 	if (game->ray.hit == 2)
-		return (7);
+		return (4);
 	if (game->ray.side == 0)
 	{
 		if (game->ray.dir.x > 0)

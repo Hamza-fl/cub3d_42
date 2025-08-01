@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 17:33:39 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/23 20:40:27 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/30 08:25:27 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ bool	ft_parsing(const char *filename, t_parsing *parsing);
 bool	is_texture_line(const char *line);
 bool	line_is_empty(const char *line);
 void	ft_initialisation(t_parsing *p);
-void	print_error(const char *msg);
+void	ft_print_error(const char *msg);
 void	ft_free_split(char **split);
 bool	set_texture_path(char *line, t_parsing *p);
 bool	file_has_xpm_extension(const char *path);
@@ -180,17 +180,18 @@ bool	set_ceiling_color(char *line, t_parsing *p);
 bool	set_floor_color(char *line, t_parsing *p);
 bool	ft_str_isnumeric(const char *s);
 bool	split_rgb(const char *s, int rgb[3]);
-bool	parse_header(int fd, t_parsing *parsing, char **first_line);
-bool	collect_map_lines(int fd, char *first_line, char ***out_lines, \
-	int *num_lines);
+bool	ft_parse_header(int fd, t_parsing *parsing, char **first_line);
+bool	ft_collect(int fd, char *first_line,
+		char ***out_lines, int *num_lines);
 bool	validate_map(char **map_lines, int height, int width, t_parsing *p);
 bool	allocate_map_matrix(char **raw_map_lines, int map_line_count, \
 	int max_width, t_parsing *p);
-bool	parse_map_and_allocate(int fd, char *first_map_line, t_parsing *p);
+bool	ft_parse_map(int fd, char *first_map_line, t_parsing *p);
 bool	ft_parsing(const char *filename, t_parsing *parsing);
 bool	check_interior_leaks(char **map_lines, int height, int width);
 bool	scan_and_locate_player(char **map_lines, int height, \
 	int width, t_parsing *p);
+bool is_valide_map(char **map_lines, int height, int width, t_parsing *p);
 
 //raycaster
 int		ft_init_game(t_game *game, t_parsing *parsing);

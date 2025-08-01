@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:02:19 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/14 17:06:08 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/08/01 08:06:43 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,66 @@ void	put_background(t_game *game)
 
 void	put_hands(t_game *game)
 {
-	static int	frame;
-	static int	count;
-	int			index;
-
-	count++;
-	if (count >= 20)
+	static int frame = 0;
+	static int timer = 0;
+	static int shooting = 0;
+	
+	if (game->keys.shot == 0)
 	{
-		frame++;
-		count = 0;
+		shooting = 0;
+		frame = 0;
+		timer = 0;
+		mlx_put_image_to_window(game->mlx, game->win, \
+			game->textures[5].img, 310, 160);
 	}
-	index = 4 + (frame % 3);
-	mlx_put_image_to_window(game->mlx, game->win, \
-		game->textures[index].img, 50, 20);
+	else
+	{
+		if (!shooting)
+		{
+			shooting = 1;
+			frame = 0;
+			timer = 0;
+		}
+		
+		if (shooting)
+		{
+			mlx_put_image_to_window(game->mlx, game->win,
+				game->textures[6 + frame].img, 310, 160);
+			
+			timer++;
+			if (timer >= 5)
+			{
+				timer = 0;
+				frame++;
+				if (frame >= 9)
+				{
+					game->keys.shot = 0;
+					shooting = 0;
+					frame = 0;
+				}
+			}
+		}
+	}
+}
+
+void put_frame(t_game *game)
+{
+	// mlx_put_image_to_window(game->mlx, game->win, \
+	// 		game->textures[15].img, 100, 100);
+	(void)game;
+	return ;
 }
 
 int	ft_game_loop(t_game *game)
 {
 	if (!game->running)
-		return (0);
+		exit(0);
 	update_player(game);
 	put_background(game);
 	cast_rays(game);
 	draw_minimap(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->screen.img, 0, 0);
 	put_hands(game);
+	put_frame(game);
 	return (0);
 }

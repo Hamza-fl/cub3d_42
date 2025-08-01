@@ -6,7 +6,7 @@
 /*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 06:18:15 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/14 16:51:24 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/07/30 03:05:14 by hfalati          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	dda_step(t_game *game, int *side)
 	}
 }
 
-void	perform_dda(t_game *game)
+void perform_dda(t_game *game)
 {
 	int	flag;
 	int	side;
@@ -58,7 +58,7 @@ void	perform_dda(t_game *game)
 		}
 		else if (is_door(game, game->ray.map_x, game->ray.map_y))
 		{
-			if (game->door_status == 0)
+			if (game->door_status[game->ray.map_y][game->ray.map_x] == 0)
 			{
 				flag = 2;
 				game->ray.hit = 2;
