@@ -44,7 +44,8 @@ static bool	assign_texture(char **dest, const char *path)
 	}
 	fd = open(trimmed, O_RDONLY);
 	if (fd < 0)
-		return (ft_print_error("Error\nCannot open texture file\n"), false);
+		return (free(trimmed), ft_print_error("Error\nCannot \
+open texture file\n"), false);
 	close(fd);
 	*dest = ft_strdup(trimmed);
 	free(trimmed);

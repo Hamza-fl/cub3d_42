@@ -58,18 +58,19 @@ BONUS_SRC = bonus/parsing/parsing_utils/ft_alloc_matrix.c \
 		bonus/parsing/parsing_utils/ft_split_rgb.c \
 		bonus/parsing/parsing_utils/ft_check_validation.c \
 		bonus/parsing/ft_parsing.c \
-		bonus/raycaster/init_game.c \
-		bonus/raycaster/init_game_utils.c \
-		bonus/raycaster/game_loop.c \
-		bonus/raycaster/cleanup_game.c \
-		bonus/raycaster/input_handling.c \
-		bonus/raycaster/input_handling_utils.c \
-		bonus/raycaster/raycaster.c \
-		bonus/raycaster/init_pos.c \
-		bonus/raycaster/dda.c \
-		bonus/raycaster/calc_wall.c \
-		bonus/src/main.c \
-		bonus/raycaster/mini_map.c \
+		bonus/raycaster/init_game_bonus.c \
+		bonus/raycaster/init_game_utils_bonus.c \
+		bonus/raycaster/game_loop_bonus.c \
+		bonus/raycaster/cleanup_game_bonus.c \
+		bonus/raycaster/input_handling_bonus.c \
+		bonus/raycaster/input_handling_utils_bonus.c \
+		bonus/raycaster/raycaster_bonus.c \
+		bonus/raycaster/init_pos_bonus.c \
+		bonus/raycaster/dda_bonus.c \
+		bonus/raycaster/calc_wall_bonus.c \
+		bonus/src/main_bonus.c \
+		bonus/raycaster/mini_map_bonus.c \
+		bonus/raycaster/check_doors_bonus.c \
 		bonus/parsing/parsing_utils/ft_check_leaks.c \
 		bonus/parsing/parsing_utils/ft_scan_map.c
 
@@ -120,7 +121,5 @@ fclean: clean
 	@make fclean -C $(BONUS_LIBFT_DIR)
 
 re: fclean all
-
-re_bonus: fclean bonus
 
 .PHONY: clean force_libft

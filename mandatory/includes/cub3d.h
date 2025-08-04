@@ -6,7 +6,7 @@
 /*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 17:33:39 by hfalati           #+#    #+#             */
-/*   Updated: 2025/07/30 08:25:27 by asebban          ###   ########.fr       */
+/*   Updated: 2025/08/04 11:31:05 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,8 +181,8 @@ bool	set_floor_color(char *line, t_parsing *p);
 bool	ft_str_isnumeric(const char *s);
 bool	split_rgb(const char *s, int rgb[3]);
 bool	ft_parse_header(int fd, t_parsing *parsing, char **first_line);
-bool	ft_collect(int fd, char *first_line,
-		char ***out_lines, int *num_lines);
+bool	ft_collect(int fd, char *first_line, \
+char ***out_lines, int *num_lines);
 bool	validate_map(char **map_lines, int height, int width, t_parsing *p);
 bool	allocate_map_matrix(char **raw_map_lines, int map_line_count, \
 	int max_width, t_parsing *p);
@@ -191,7 +191,7 @@ bool	ft_parsing(const char *filename, t_parsing *parsing);
 bool	check_interior_leaks(char **map_lines, int height, int width);
 bool	scan_and_locate_player(char **map_lines, int height, \
 	int width, t_parsing *p);
-bool is_valide_map(char **map_lines, int height, int width, t_parsing *p);
+bool	is_valide_map(char **map_lines, int height, int width, t_parsing *p);
 
 //raycaster
 int		ft_init_game(t_game *game, t_parsing *parsing);

@@ -49,39 +49,14 @@ static bool	handle_texture_line(char *line, t_parsing *p, int *header_count)
 	return (true);
 }
 
-// bool	ft_check_header_line(char *line, t_parsing *p,
-// 								int *header_count, char **first_map_line)
-// {
-// 	while (*line == ' ' || *line == '\t')
-// 		line++;
-// 	if (is_texture_line(line))
-// 		return (handle_texture_line(line, p, header_count));
-// 	else if (line[0] == 'F' && (line[1] == ' ' || line[1] == '\t'))
-// 		return (handle_color_line(line, p, header_count));
-// 	else if (line[0] == 'C' && (line[1] == ' ' || line[1] == '\t'))
-// 		return (handle_color_line(line, p, header_count));
-// 	else
-// 	{
-// 		*first_map_line = ft_strdup(line);
-// 		if (!*first_map_line)
-// 		{
-// 			ft_print_error("Error\nft_strdup failed\n");
-// 			return (false);
-// 		}
-// 		return (true);
-// 	}
-// }
-
 bool	ft_check_header_line(char *line, t_parsing *p,
 								int *header_count, char **first_map_line)
 {
-	char *trimmed;
+	char	*trimmed;
 
-	// Use a temporary pointer for checking, not for storing
 	trimmed = line;
 	while (*trimmed == ' ' || *trimmed == '\t')
 		trimmed++;
-
 	if (is_texture_line(trimmed))
 		return (handle_texture_line(trimmed, p, header_count));
 	else if (trimmed[0] == 'F' && (trimmed[1] == ' ' || trimmed[1] == '\t'))
@@ -90,7 +65,6 @@ bool	ft_check_header_line(char *line, t_parsing *p,
 		return (handle_color_line(trimmed, p, header_count));
 	else
 	{
-		// ⚠️ Preserve full spacing of the original line
 		*first_map_line = ft_strdup(line);
 		if (!*first_map_line)
 		{
@@ -122,8 +96,8 @@ bool	ft_parse_header(int fd, t_parsing *parsing, char **first_line)
 		line = ft_readline(fd);
 	}
 	if (count < 6)
-		return (ft_print_error("Error\nNot all textures/colors provided.\n"),
-				false);
+		return (ft_print_error("Error\nNot all textures/colors provided.\n"), \
+false);
 	if (!*first_line)
 		return (ft_print_error("Error\nUnexpected EOF before map.\n"),
 			free(line), false);

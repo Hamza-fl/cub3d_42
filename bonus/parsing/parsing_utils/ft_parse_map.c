@@ -68,11 +68,6 @@ bool	ft_parse_map(int fd, char *first_map_line, t_parsing *p)
 	map_line_count = 0;
 	if (!gather_map_lines(fd, first_map_line, &matrix, &map_line_count))
 		return (false);
-		// 🔍 DEBUG PRINT MAP LINES
-	int i;
-	printf("Collected %d map lines:\n", map_line_count);
-	for (i = 0; i < map_line_count; i++)
-		printf("[%2d] \"%s\"\n", i, matrix[i]);
 	max_width = compute_max_width(matrix, map_line_count);
 	if (!is_valide_map(matrix, map_line_count, max_width, p))
 	{

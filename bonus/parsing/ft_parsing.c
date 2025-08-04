@@ -42,8 +42,9 @@ void	free_textures(t_parsing *p)
 
 static bool	has_cub_extension(const char *filename)
 {
-	size_t	len = ft_strlen(filename);
+	size_t	len;
 
+	len = ft_strlen(filename);
 	if (len < 4)
 		return (false);
 	return (ft_strcmp(filename + len - 4, ".cub") == 0);
@@ -56,7 +57,8 @@ bool	ft_parsing(const char *filename, t_parsing *parsing)
 	char		*first_line;
 
 	if (!has_cub_extension(filename))
-		return (ft_print_error("Error\nFile must have a .cub extension\n"), false);
+		return (ft_print_error("Error\nFile must have a \
+.cub extension\n"), false);
 	first_line = NULL;
 	ft_initialisation(&tmp);
 	fd = open(filename, O_RDONLY);

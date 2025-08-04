@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hfalati <hfalati@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 17:38:07 by asebban           #+#    #+#             */
-/*   Updated: 2025/08/01 06:06:57 by hfalati          ###   ########.fr       */
+/*   Updated: 2025/08/04 11:34:04 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,11 +220,6 @@ int		init_player(t_game *game, t_parsing *parsing);
 int		key_press(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
 int		select_texture(t_game *game);
-
-
-
-//------
-
 bool	ft_parsing(const char *filename, t_parsing *parsing);
 bool	is_texture_line(const char *line);
 bool	line_is_empty(const char *line);
@@ -238,8 +233,8 @@ bool	set_floor_color(char *line, t_parsing *p);
 bool	ft_str_isnumeric(const char *s);
 bool	split_rgb(const char *s, int rgb[3]);
 bool	ft_parse_header(int fd, t_parsing *parsing, char **first_line);
-bool	ft_collect(int fd, char *first_line,
-		char ***out_lines, int *num_lines);
+bool	ft_collect(int fd, char *first_line, \
+char ***out_lines, int *num_lines);
 bool	validate_map(char **map_lines, int height, int width, t_parsing *p);
 bool	allocate_map_matrix(char **raw_map_lines, int map_line_count, \
 	int max_width, t_parsing *p);
@@ -248,6 +243,9 @@ bool	ft_parsing(const char *filename, t_parsing *parsing);
 bool	check_interior_leaks(char **map_lines, int height, int width);
 bool	scan_and_locate_player(char **map_lines, int height, \
 	int width, t_parsing *p);
-bool is_valide_map(char **map_lines, int height, int width, t_parsing *p);
-
+bool	is_valide_map(char **map_lines, int height, int width, t_parsing *p);
+void	free_door_status(t_game *game, int rows);
+void	init_keys(t_keys *keys, t_game *game);
+void	handle_door_interaction(t_game *game);
+void	calculate_corners(t_vector new_pos, int corners[4][2]);
 #endif

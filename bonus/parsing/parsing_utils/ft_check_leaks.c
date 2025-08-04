@@ -6,7 +6,7 @@
 /*   By: asebban <asebban@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 07:54:42 by asebban           #+#    #+#             */
-/*   Updated: 2025/07/30 21:41:09 by asebban          ###   ########.fr       */
+/*   Updated: 2025/08/03 22:14:44 by asebban          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static bool	check_cell(char **map_lines, int r, int c, int height)
 	char	ch;
 
 	ch = get_char(map_lines, r, c, height);
-	if (ch == '0' || ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W' || ch == 'D')
+	if (ch == '0' || ch == 'N' || ch == 'S' || ch == 'E'
+		|| ch == 'W' || ch == 'D')
 	{
 		left = get_char(map_lines, r, c - 1, height);
 		right = get_char(map_lines, r, c + 1, height);

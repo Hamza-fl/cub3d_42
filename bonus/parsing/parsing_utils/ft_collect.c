@@ -63,11 +63,12 @@ bool	read_map_lines(int fd, t_line_node **head, char *first_line, int *count)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		// if (line_is_empty(line))
-		// {
-		// 	free(line);
-		// 	break ;
-		// }
+		if (line_is_empty(line))
+		{
+			free(line);
+			ft_print_error("Error\nInvalid map\n");
+			return (false);
+		}
 		if (!append_node(head, line))
 			return (false);
 		(*count)++;
